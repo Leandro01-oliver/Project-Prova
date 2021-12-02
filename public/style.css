@@ -1,0 +1,43 @@
+@keyframes animaSad {
+  0%{
+    width: 70px;
+    opacity: 0;
+  }
+  100%{
+    width: 300px;
+    opacity: 1;
+  }
+}
+
+#box-sad.show-sad{
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 300px;
+   height: 100vh;
+   align-items: unset;
+   justify-content: unset;
+   z-index: 1000;
+   background-color: red;
+   border: none;
+   box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
+   padding: 20px 0;
+   animation: animaSad .5s ease-in-out;
+}
+
+#box-nav.show-sad{
+  width: 100%;
+}
+
+#box-filter{
+  display: none;
+}
+
+#box-filter.show-sad{
+  display: block;
+  margin-top: 2rem;
+}
+
+#menu.show-sad{
+ margin-right: 1rem;
+}
