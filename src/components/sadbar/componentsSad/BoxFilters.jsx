@@ -1,4 +1,6 @@
-import {Flex,Button} from "@chakra-ui/react"
+import {Flex} from "@chakra-ui/react"
+import LinkSad from "./linksNav";
+import SearchFilter from "./searchFilter"
 
 function Filters(){
 
@@ -11,7 +13,8 @@ function Filters(){
             justify="center"
             display="none"
             >
-              <Button w="100%">OI</Button>
+           <SearchFilter/>
+            <LinkSad/>
             </Flex>
         </>
     )

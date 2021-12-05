@@ -1,6 +1,8 @@
 import { Flex, Box } from "@chakra-ui/react"
-import Image from 'next/image'
-import LogoImg from '../../../public/logo.png'
+import Logo from "./componentsNav/logo";
+import User from "./componentsNav/boxUser"
+import SignIn from "./componentsNav/signIn";
+import MenuNav from "./componentsNav/menuNav";
 
  function Header(){
 
@@ -8,24 +10,22 @@ import LogoImg from '../../../public/logo.png'
              <>
                 <Flex
                     id="box-nav"
-                    w="calc(100% - 70px)"
+                    w="calc(100% - 60px)"
                     h="70px"
                     borderBottom="2px solid #000"
                     align="center"
                     justify="space-between"
                 >
-                    <Flex
-                      align="center"
-                      marginLeft="1rem"
-                      cursor="pointer"
-                    >
-                      <Image
-                        src={LogoImg}
-                        height="50px"
-                        width="50px"
-                      />
-                    </Flex>
-                 
+                  <Logo/>
+
+
+                   <MenuNav/>
+
+                  <Flex id="mobile-sign" align="center" direction={{sm:"column",md:"row",lg:"row",xl:"row"}}>
+                     <User/>
+                     <SignIn/>
+                  </Flex>
+
                 </Flex>
              </>
            )  

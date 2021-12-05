@@ -1,6 +1,6 @@
 import {Flex} from "@chakra-ui/react"
-import MenuNav from "./componentsSad/menu"
-import Filters from "./componentsSad/BoxFilters"
+import MenuSad from "./componentsSad/menuSad"
+import Filters from "./componentsSad/boxFilters"
 
 
  function Sad(){
@@ -9,7 +9,7 @@ import Filters from "./componentsSad/BoxFilters"
              <>
                 <Flex
                     id="box-sad"
-                    w="70px"
+                    w="60px"
                     h="70px"
                     borderRight="2px solid #000"
                     borderBottom="2px solid #000"
@@ -17,10 +17,8 @@ import Filters from "./componentsSad/BoxFilters"
                    align="center"
                    flexDirection="column"
                 >
-                   <MenuNav/>
-  
+                   <MenuSad/>
                    <Filters/>
-
                 </Flex>
              </>
            )  
