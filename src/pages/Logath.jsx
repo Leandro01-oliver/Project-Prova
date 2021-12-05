@@ -117,7 +117,7 @@ import { collection, getDocs} from 'firebase/firestore';
             right="2px"
             clipPath="polygon(50% 0%, 27% 20%, 76% 20%)"
            ></Box>
-
+     
            <Box
            position="absolute"
            zIndex="1000"
