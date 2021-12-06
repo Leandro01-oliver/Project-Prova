@@ -32,13 +32,13 @@ export default function CadastrarA() {
   
     const carCollectionRef = collection( db , "cars" );
 
-    const getUsers = async () => {
+    const getCars = async () => {
 
       const data = await getDocs(carCollectionRef);
       data.docs.map((doc) => ({...doc.data(), id: doc.id}));
     };
     
-    getUsers();
+    getCars();
 
   },[])
  
@@ -81,7 +81,13 @@ export default function CadastrarA() {
 
   }
 
-
+  const [animaLabelOne, setAnimaLabelOne] = useState(false);
+  const [animaLabelTwo, setAnimaLabelTwo] = useState(false);
+  const [animaLabelThree, setAnimaLabelThree] = useState(false);
+  const [animaLabelFour, setAnimaLabelFour] = useState(false);
+  const [animaLabelFive, setAnimaLabelFive] = useState(false);
+  const [animaLabelSix, setAnimaLabelSix] = useState(false);
+  const [animaLabelSeven, setAnimaLabelSeven] = useState(false);
 
 
     return (
@@ -109,127 +115,362 @@ export default function CadastrarA() {
          maxW="550px"
          h="calc(100vh - 100px)"
        >
-    <Flex
-        h="50px"
-        w="96%"
-        mx="auto"
-        borderRadius="10px"
-        border="2px dashed #000"
-        align="center"
-        justify="center"
-        cursor="pointer"
-    >
-    <label
-     id="label__file"
-     for="input__file"
-     w="96%"
-     mx="auto"
-    >
-    Enviar a foto de seu automóvel
-    </label>
-     <Input
-      id="input__file"
-      display="none"
-       mt="1rem"
-       type="file"
-      //  onChange={handleChange}
-      />
-    </Flex>
+            <Flex
+                        h="50px"
+                        w="96%"
+                        mx="auto"
+                        borderRadius="10px"
+                        border="2px dashed #000"
+                        align="center"
+                        justify="center"
+                        cursor="pointer"
+                    >
+                    <label
+                    id="label__file"
+                    for="input__file"
+                    w="96%"
+                    mx="auto"
+                    >
+                    Enviar a foto de seu automóvel
+                    </label>
+                    <Input
+                    id="input__file"
+                    display="none"
+                    mt="1rem"
+                    type="file"
+                    />
+                    </Flex>
+            <Flex
+                    w="96%"
+                    mx="auto"
+                    h="50px"
+                    border= "2px solid #000"
+                    mt="1.5rem"
+                    borderRadius="5px"
+                    align="center"
+                    justify="center"
+                    position="relative"
+                    transition=".5s ease-in-out"
+                    p={animaLabelOne ? '35px 10px 20px 10px' : '10px'}
+                    _hover={{
+                        border:"2px solid transparent",
+                        boxShadow:"0 0 5px 0 rgba( 0 , 0, 0, .5)"
+                    }}
+                    >
+                    <Text
+                    position="absolute"
+                    top={animaLabelOne ? '.25rem' : '-.9rem'}
+                    fontSize={animaLabelOne ? '12px' : '14px'}
+                    left="1rem"
+                    bg={ animaLabelOne ? 'transparent' : '#fff'}
+                    p="0 5px"
+                    onChange={(event) =>{
+                        setAnimaLabelOne(event.target.value);
+                    }}
+                    >
+                    Categoria do Automóvel :
+                    </Text>
+                    <Input
+                    onClick={()=>{
+                        setAnimaLabelOne(!animaLabelOne);
+                    } }
+                        w="100%"
+                        p="0"
+                        h="50px"
+                        type="text"
+                        border="0"
+                        borderRadius="5px!important"
+                        _focus={{
+                            boxShadow:"none" 
+                        }}
+                        onChange={(event) =>{
+                          setCategoria(event.target.value);
+                        }}  
+                    />
+                    </Flex>
 
-    <Box 
-    w="96%"
-    mx="auto"
-    >
-      <Input
-       mt="1rem"
-       type="text"
-       placeholder="Informe a categoria do seu automóvel"
-       onChange={(event) =>{
-        setCategoria(event.target.value);
-      }} 
-      />
-    </Box>
+                    <Flex
+                    w="96%"
+                    mx="auto"
+                    h="50px"
+                    border= "2px solid #000"
+                    mt="1.5rem"
+                    borderRadius="5px"
+                    align="center"
+                    justify="center"
+                    position="relative"
+                    transition=".5s ease-in-out"
+                    p={animaLabelOne ? '35px 10px 20px 10px' : '10px'}
+                    _hover={{
+                        border:"2px solid transparent",
+                        boxShadow:"0 0 5px 0 rgba( 0 , 0, 0, .5)"
+                    }}
+                    >
+                    <Text
+                    position="absolute"
+                    top={animaLabelTwo ? '.25rem' : '-.9rem'}
+                    fontSize={animaLabelTwo ? '12px' : '14px'}
+                    left="1rem"
+                    bg={ animaLabelTwo ? 'transparent' : '#fff'}
+                    p="0 5px"
+                    onChange={(event) =>{
+                        animaLabelTwo(event.target.value);
+                    }}
+                    >
+                    Marca do Automóvel :
+                    </Text>
+                <Input
+                   onClick={()=>{
+                    setAnimaLabelTwo(!animaLabelTwo)
+                } }
+                    w="100%"
+                    p="0"
+                    h="50px"
+                    type="text"
+                    border="0"
+                 borderRadius="5px!important"
+                 _focus={{
+                     boxShadow:"none" 
+                 }}
+                    onChange={(event) =>{
+                        setMarcaAutomovel(event.target.value);
+                    }} 
+                    />
+                    </Flex>
 
-    <Box 
-    w="96%"
-    mx="auto"
-    >
-   <Input
-      mt="1rem"
-       type="text"
-       placeholder="Informe a marca do seu automóvel"
-       onChange={(event) =>{
-        setMarcaAutomovel(event.target.value);
-      }} 
-    />
-    </Box>
+                    <Flex
+                    w="96%"
+                    mx="auto"
+                    h="50px"
+                    border= "2px solid #000"
+                    mt="1.5rem"
+                    borderRadius="5px"
+                    align="center"
+                    justify="center"
+                    position="relative"
+                    transition=".5s ease-in-out"
+                    p={animaLabelThree ? '35px 10px 20px 10px' : '10px'}
+                    _hover={{
+                        border:"2px solid transparent",
+                        boxShadow:"0 0 5px 0 rgba( 0 , 0, 0, .5)"
+                    }}
+                    >
+                    <Text
+                    position="absolute"
+                    top={animaLabelThree ? '.25rem' : '-.9rem'}
+                    fontSize={animaLabelThree ? '12px' : '14px'}
+                    left="1rem"
+                    bg={ animaLabelThree ? 'transparent' : '#fff'}
+                    p="0 5px"
+                    onChange={(event) =>{
+                        animaLabelThree(event.target.value);
+                    }}
+                    >
+                    Modelo do Automóvel :
+                    </Text>
+                <Input
+                   onClick={()=>{
+                    setAnimaLabelThree(!animaLabelThree)
+                } }
+                    w="100%"
+                    p="0"
+                    h="50px"
+                    type="text"
+                    border="0"
+                    borderRadius="5px!important"
+                    _focus={{
+                        boxShadow:"none" 
+                    }}
+                    onChange={(event) =>{
+                      setModeloAutomovel(event.target.value);
+                    }} 
+                    />
+                    </Flex>
 
-    <Box 
-    w="96%"
-    mx="auto"
-    >
-   <Input
-       mt="1rem"
-       type="text"
-       placeholder="Informe o modelo do seu automóvel"
-       onChange={(event) =>{
-        setModeloAutomovel(event.target.value);
-      }} 
-    />
-    </Box>
+                    <Flex
+                    w="96%"
+                    mx="auto"
+                    h="50px"
+                    border= "2px solid #000"
+                    mt="1.5rem"
+                    borderRadius="5px"
+                    align="center"
+                    justify="center"
+                    position="relative"
+                    transition=".5s ease-in-out"
+                    p={ animaLabelFour ? '35px 10px 20px 10px' : '10px'}
+                    _hover={{
+                        border:"2px solid transparent",
+                        boxShadow:"0 0 5px 0 rgba( 0 , 0, 0, .5)"
+                    }}
+                    >
+                    <Text
+                    position="absolute"
+                    top={ animaLabelFour ? '.25rem' : '-.9rem'}
+                    fontSize={ animaLabelFour ? '12px' : '14px'}
+                    left="1rem"
+                    bg={ animaLabelFour ? 'transparent' : '#fff'}
+                    p="0 5px"
+                    onChange={(event) =>{
+                        animaLabelFour(event.target.value);
+                    }}
+                    >
+                       Ano de Fabricação do Automóvel :
+                    </Text>
+                    <Input
+                        onClick={()=>{      
+                          setAnimaLabelFour(!animaLabelFour)
+                        } }
+                        w="100%"
+                        p="0"
+                        h="50px"
+                        type="text"
+                        border="0"
+                        borderRadius="5px!important"
+                        _focus={{
+                            boxShadow:"none" 
+                        }}
+                    onChange={(event) =>{
+                      setAnoFabricacaoAutomovel(event.target.value);
+                    }} 
+                    />
+                    </Flex>
 
-   <Box 
-    w="96%"
-    mx="auto"
-    >
-    <Input
-       mt="1rem"
-       type="text"
-       placeholder="Informe o ano de fabricação do seu automóvel"
-       onChange={(event) =>{
-        setAnoFabricacaoAutomovel(event.target.value);
-      }} 
-    />
-    </Box>
+                    <Flex
+                    w="96%"
+                    mx="auto"
+                    h="50px"
+                    border= "2px solid #000"
+                    mt="1.5rem"
+                    borderRadius="5px"
+                    align="center"
+                    justify="center"
+                    position="relative"
+                    transition=".5s ease-in-out"
+                    p={ animaLabelFive ? '35px 10px 20px 10px' : '10px'}
+                    _hover={{
+                        border:"2px solid transparent",
+                        boxShadow:"0 0 5px 0 rgba( 0 , 0, 0, .5)"
+                    }}
+                    >
+                    <Text
+                    position="absolute"
+                    top={ animaLabelFive ? '.25rem' : '-.9rem'}
+                    fontSize={ animaLabelFive ? '12px' : '14px'}
+                    left="1rem"
+                    bg={ animaLabelFive ? 'transparent' : '#fff'}
+                    p="0 5px"
+                    onChange={(event) =>{
+                        animaLabelFive(event.target.value);
+                    }}
+                    >
+                       Ano de Modelo do Automóvel :
+                    </Text>
+                    <Input
+                    onClick={()=>{
+                      setAnimaLabelFive(!animaLabelFive)
+                    } }
+                    w="100%"
+                    p="0"
+                    h="50px"
+                    type="text"
+                    border="0"
+                    borderRadius="5px!important"
+                    _focus={{
+                       boxShadow:"none" 
+                    }}
+                     onChange={(event) =>{
+                      setAnoModeloAutomovel(event.target.value);
+                    }}
+                    />
+                    </Flex>
 
-    <Box 
-    w="96%"
-    mx="auto"
-    >
-    <Input
-       mt="1rem"
-       type="text"
-       placeholder="Informe o ano do modelo do seu automóvel"
-       onChange={(event) =>{
-        setAnoModeloAutomovel(event.target.value);
-      }} 
-    />
-    </Box>
-    <Box 
-    w="96%"
-    mx="auto"
-    >
-   <Input
-       mt="1rem"
-       type="text"
-       placeholder="Informe o valor de venda do seu automóvel"
-       onChange={(event) =>{
-        setValorVendaAutomovel(event.target.value);
-      }} 
-    />
-    </Box>
-    <Box 
-    w="96%"
-    mx="auto"
-    >
-    <textarea 
-    id="textarea__desc"
-    placeholder="Informe a descrição de seu automóvel"
-     onChange={(event) =>{
-        setDescricaoAutomovelAutomovel(event.target.value);
-      }} 
-    ></textarea>
-    </Box>
+                    <Flex
+                    w="96%"
+                    mx="auto"
+                    h="50px"
+                    border= "2px solid #000"
+                    mt="1.5rem"
+                    borderRadius="5px"
+                    align="center"
+                    justify="center"
+                    position="relative"
+                    transition=".5s ease-in-out"
+                    p={ animaLabelSix ? '35px 10px 20px 10px' : '10px'}
+                    _hover={{
+                        border:"2px solid transparent",
+                        boxShadow:"0 0 5px 0 rgba( 0 , 0, 0, .5)"
+                    }}
+                    >
+                    <Text
+                    position="absolute"
+                    top={ animaLabelSix ? '.25rem' : '-.9rem'}
+                    fontSize={ animaLabelSix ? '12px' : '14px'}
+                    left="1rem"
+                    bg={ animaLabelSix ? 'transparent' : '#fff'}
+                    p="0 5px"
+                    onChange={(event) =>{
+                        animaLabelSix(event.target.value);
+                    }}
+                    >
+                        Valor de Venda do Automóvel :
+                    </Text>
+                <Input
+                    w="100%"
+                    onClick={()=>{
+                        setAnimaLabelSix(!animaLabelSix)
+                    } }
+                    p="0"
+                    h="50px"
+                    type="text"
+                    border="0"
+                    borderRadius="5px!important"
+                    _focus={{
+                        boxShadow:"none" 
+                     }}
+                    onChange={(event) =>{
+                        setValorVendaAutomovel(event.target.value);
+                    }} 
+                    />
+                  </Flex>
+
+                    <Flex 
+                    w="96%"
+                    mx="auto"
+                    h="150px"
+                    border= "2px solid #000"
+                    my="1rem"
+                    borderRadius="5px"
+                    p="10px 8px"
+                    align="center"
+                    justify="center"
+                    position="relative"
+                    >
+                   <Text
+                    position="absolute"
+                    top={ animaLabelSeven ? '.2rem' : '-.9rem'}
+                    fontSize={ animaLabelSeven ? '12px' : '14px'}
+                    left="1rem"
+                    p="0 5px"
+                    bg={ animaLabelSeven ? 'transparent' : '#fff'}
+                    onChange={(event) =>{
+                        animaLabelSeven(event.target.value);
+                    }}
+                    >
+                        Descrição do Automóvel :
+                    </Text>
+                    <textarea 
+                    id="textarea__desc"
+                    onClick={()=>{
+                     setAnimaLabelSeven(!animaLabelSeven)   
+                    } }
+                    onChange={(event) =>{
+                      setDescricaoAutomovelAutomovel(event.target.value);
+                    }} 
+                    ></textarea>
+                </Flex>
+
+
     <Box 
     w="96%"
     mx="auto"
