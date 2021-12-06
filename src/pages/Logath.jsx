@@ -81,7 +81,15 @@ import { animate } from 'framer-motion';
    }
 
   const handleDelite = async (id) =>{
-    await deleteDoc(doc(db,"cars",id));
+
+        if(deleteDoc){
+            await deleteDoc(doc(db,"cars",id));
+            alert("Anúncio excluirdo com Sucesso!")
+            location.reload()
+        }else{
+            alert("Não foi possível excluir seu anúncio.")
+        }
+
   }
 
     useEffect(() => {
@@ -112,7 +120,6 @@ import { animate } from 'framer-motion';
     const [animaLabelSix, setAnimaLabelSix] = useState(false);
     const [animaLabelSeven, setAnimaLabelSeven] = useState(false);
 
-  
     return (
         <>
          <Flex
@@ -213,7 +220,8 @@ import { animate } from 'framer-motion';
          >
          <SimpleGrid 
               columns={{sm:"1",md:"2",lg:"3",xl:"4"}} 
-              spacing={10}
+              spacing={3}
+              p="0 0 3rem 0"
         >
          { 
             cars.map((cars) =>{
@@ -221,7 +229,7 @@ import { animate } from 'framer-motion';
                       <>
                         <Box 
                         position="relative"
-                        my="2rem"
+                        mt="3rem"
                         bg='#fff' 
                         w="300px"
                         mx="auto"
@@ -470,9 +478,11 @@ import { animate } from 'framer-motion';
                     Categoria do Automóvel :
                     </Text>
                     <Input
+                    id="input__cartegory_car"
                     onClick={()=>{
                         setAnimaLabelOne(!animaLabelOne);
                     } }
+
                         w="100%"
                         p="0"
                         h="50px"
@@ -625,10 +635,18 @@ import { animate } from 'framer-motion';
                         h="50px"
                         type="text"
                         border="0"
+                        maxLength="10"
                         borderRadius="5px!important"
                         _focus={{
                             boxShadow:"none" 
                         }}
+                        id="input__date_manufacturing"
+                        onKeyPress = {()=>{
+                            let inputDateManufacturing = document.querySelector("#input__date_manufacturing");
+  
+                            if(inputDateManufacturing.value.length == 2 ||  inputDateManufacturing.value.length == 5)
+                             inputDateManufacturing.value += "/"
+                       }}
                     onChange={(event) =>{
                         setUpdateAnoFabricacaoAutomovel(event.target.value);
                     }} 
@@ -666,10 +684,15 @@ import { animate } from 'framer-motion';
                        Ano de Modelo do Automóvel :
                     </Text>
                     <Input
-                    onClick={()=>{
-                        setAnimaLabelFive(!animaLabelFive)
-                    } }
-                    w="100%"
+                     id="input__date_model"
+                     maxLength="10"
+                     w="100%"
+                     onKeyPress = {()=>{
+                          let inputDateModel = document.querySelector("#input__date_model");
+
+                          if(inputDateModel.value.length == 2 ||  inputDateModel.value.length == 5)
+                           inputDateModel.value += "/"
+                     }}
                     p="0"
                     h="50px"
                     type="text"
@@ -715,7 +738,15 @@ import { animate } from 'framer-motion';
                         Valor de Venda do Automóvel :
                     </Text>
                 <Input
+                    id="input__value_sales"
                     w="100%"
+                    onKeyPress = {() =>{
+                       let valueSales = document.querySelector("#input__value_sales");
+
+                      if(valueSales.value.length == 0)
+                           valueSales.value += "R$";
+                    }}
+
                     onClick={()=>{
                         setAnimaLabelSix(!animaLabelSix)
                     } }

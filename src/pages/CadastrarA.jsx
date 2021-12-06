@@ -322,6 +322,14 @@ export default function CadastrarA() {
                           setAnimaLabelFour(!animaLabelFour)
                         } }
                         w="100%"
+                        maxLength="10"
+                        id="input__date_manufacturing"
+                        onKeyPress = {()=>{
+                            let inputDateManufacturing = document.querySelector("#input__date_manufacturing");
+  
+                            if(inputDateManufacturing.value.length == 2 ||  inputDateManufacturing.value.length == 5)
+                             inputDateManufacturing.value += "/"
+                       }}
                         p="0"
                         h="50px"
                         type="text"
@@ -371,6 +379,14 @@ export default function CadastrarA() {
                       setAnimaLabelFive(!animaLabelFive)
                     } }
                     w="100%"
+                    id="input__date_model"
+                    maxLength="10"
+                    onKeyPress = {()=>{
+                         let inputDateModel = document.querySelector("#input__date_model");
+
+                         if(inputDateModel.value.length == 2 ||  inputDateModel.value.length == 5)
+                          inputDateModel.value += "/"
+                    }}
                     p="0"
                     h="50px"
                     type="text"
@@ -416,7 +432,14 @@ export default function CadastrarA() {
                         Valor de Venda do Automóvel :
                     </Text>
                 <Input
-                    w="100%"
+                  id="input__value_sales"
+                  w="100%"
+                  onKeyPress = {() =>{
+                      let valueSales = document.querySelector("#input__value_sales");
+
+                    if(valueSales.value.length == 0)
+                          valueSales.value += "R$";
+                  }}
                     onClick={()=>{
                         setAnimaLabelSix(!animaLabelSix)
                     } }
