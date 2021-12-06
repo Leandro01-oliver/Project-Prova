@@ -1,11 +1,13 @@
 import React from 'react'
-import {Flex,Button,Input,Box,InputGroup,Text,InputRightElement} from "@chakra-ui/react"
+import {Flex,Button,Input,Box,Text} from "@chakra-ui/react"
 import Link from 'next/link'
-import { db  } from "../config/firebaseConnection"
-import { collection, getDocs, addDoc} from "firebase/firestore"
+import { db, storage } from "../config/firebaseConnection"
+import { collection, getDocs, addDoc } from "firebase/firestore"
+import { ref, getDownloadURL  } from "firebase/storage"
 import { useState, useEffect } from "react";
 
 export default function CadastrarA() {
+
 
 
     const [newCategoria, setCategoria] = useState("");
@@ -16,6 +18,15 @@ export default function CadastrarA() {
     const [newValorVendaAutomovel, setValorVendaAutomovel] = useState("");
     const [newDescricaoAutomovel, setDescricaoAutomovelAutomovel] = useState("");
 
+    const [image,setImage] = useState(null);
+
+    // const handleChange = e => {
+    //    if(e.target.files[0]){
+    //      setImage(e.target.files[0]);
+    //    }
+    //    console.log("image :", image)
+    // }
+  
  
   useEffect(() => {
   
@@ -34,6 +45,22 @@ export default function CadastrarA() {
   const creatCarsA = async () =>{
 
     const carCollectionRef = collection( db , "cars" );
+
+    // const uploadTask = storage.ref(`images/${image.name}`).put(image);
+
+    // uploadTask.on(
+    //   "state_changed",
+    //   snapshot => {},
+    //   error => {
+    //     console.log(error);
+    //   },
+    //   ()=>{
+    //       storage
+    //       .ref("images")
+    //       .child(image.name)
+    //       .getDownloadURL();
+    //   }
+    // );
 
     if(addDoc){
       await addDoc(carCollectionRef,{
@@ -54,19 +81,12 @@ export default function CadastrarA() {
 
   }
 
-  const UploadFile = async (e) =>{
-     const file = e.target.files[0];
-     const storageRef = storage.storage().ref();
-     const fileRef = storageRef.child(file.name);
-     await fileRef.put(file).then(()=>{
-       console.log("Upload feito com sucesso!");
-     })
-  } 
+
 
 
     return (
         <>
-             <Flex
+    <Flex
     w="100%"
     minH="100vh"
     bg="rgb(0 , 0 , 180)"
@@ -75,18 +95,24 @@ export default function CadastrarA() {
      <Flex 
       w="100%"
       maxW="550px"
-      minH="calc(100vh - 100px)"
+      h="calc(100vh - 100px)"
       boxShadow="0 0 10px 0 rgba(0,0,0,.5)"
       borderRadius="20px"
       mx="auto"
-      p="20px"
+      p="20px 10px "
       direction="column"
       justify="center"
       bg="#fff"
      >
+       <Box
+         overflowY="scroll"
+         maxW="550px"
+         h="calc(100vh - 100px)"
+       >
     <Flex
         h="50px"
-        w="100%"
+        w="96%"
+        mx="auto"
         borderRadius="10px"
         border="2px dashed #000"
         align="center"
@@ -96,6 +122,8 @@ export default function CadastrarA() {
     <label
      id="label__file"
      for="input__file"
+     w="96%"
+     mx="auto"
     >
     Enviar a foto de seu automóvel
     </label>
@@ -104,19 +132,28 @@ export default function CadastrarA() {
       display="none"
        mt="1rem"
        type="file"
-       onChange={UploadFile}
+      //  onChange={handleChange}
       />
     </Flex>
 
+    <Box 
+    w="96%"
+    mx="auto"
+    >
       <Input
-      mt="1rem"
+       mt="1rem"
        type="text"
        placeholder="Informe a categoria do seu automóvel"
        onChange={(event) =>{
         setCategoria(event.target.value);
       }} 
       />
- 
+    </Box>
+
+    <Box 
+    w="96%"
+    mx="auto"
+    >
    <Input
       mt="1rem"
        type="text"
@@ -125,7 +162,12 @@ export default function CadastrarA() {
         setMarcaAutomovel(event.target.value);
       }} 
     />
+    </Box>
 
+    <Box 
+    w="96%"
+    mx="auto"
+    >
    <Input
        mt="1rem"
        type="text"
@@ -134,7 +176,12 @@ export default function CadastrarA() {
         setModeloAutomovel(event.target.value);
       }} 
     />
+    </Box>
 
+   <Box 
+    w="96%"
+    mx="auto"
+    >
     <Input
        mt="1rem"
        type="text"
@@ -143,7 +190,12 @@ export default function CadastrarA() {
         setAnoFabricacaoAutomovel(event.target.value);
       }} 
     />
+    </Box>
 
+    <Box 
+    w="96%"
+    mx="auto"
+    >
     <Input
        mt="1rem"
        type="text"
@@ -152,7 +204,11 @@ export default function CadastrarA() {
         setAnoModeloAutomovel(event.target.value);
       }} 
     />
-
+    </Box>
+    <Box 
+    w="96%"
+    mx="auto"
+    >
    <Input
        mt="1rem"
        type="text"
@@ -161,21 +217,35 @@ export default function CadastrarA() {
         setValorVendaAutomovel(event.target.value);
       }} 
     />
-
+    </Box>
+    <Box 
+    w="96%"
+    mx="auto"
+    >
     <textarea 
     id="textarea__desc"
+    placeholder="Informe a descrição de seu automóvel"
      onChange={(event) =>{
         setDescricaoAutomovelAutomovel(event.target.value);
       }} 
     ></textarea>
-
+    </Box>
+    <Box 
+    w="96%"
+    mx="auto"
+    >
       <Button w="100%"  
               mt="1rem"
               onClick={creatCarsA}
               >
         Cadastrar-se
       </Button>
+    </Box>
 
+   <Box 
+    w="96%"
+    mx="auto"
+    >
    <Link
     href="/Logath"
    >
@@ -185,6 +255,8 @@ export default function CadastrarA() {
         Voltar
       </Button>
    </Link>
+   </Box>
+   </Box>
      </Flex>
     </Flex>
         </>

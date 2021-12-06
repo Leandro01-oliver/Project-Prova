@@ -8,6 +8,7 @@ import {
          Text,
          Input
        } from "@chakra-ui/react";
+import { AiOutlineReload } from 'react-icons/ai'
 import { BiEdit } from 'react-icons/bi';
 import { ImBin } from 'react-icons/im';
 import { CgClose } from 'react-icons/cg';
@@ -16,7 +17,7 @@ import LogoImg from "../../public/logo.png";
 import Link from "next/link";
 import { auth, db } from '../config/firebaseConnection';
 import { signOut } from "firebase/auth"
-import { collection, getDocs} from 'firebase/firestore';
+import { collection, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore';
 
 
  function Logath() {
@@ -25,12 +26,22 @@ import { collection, getDocs} from 'firebase/firestore';
     const [openMneu,setOpenMenu] = useState(false);
     const handlMenu = () =>{setOpenMenu(!openMneu)}
 
-    const handlModalMenu = () =>{
+    const [categoria, setUpdateCategoria] = useState("");
+    const [marcaAutomovel, setUpdateMarcaAutomovel] = useState("");
+    const [modeloAutomovel, setUpdateModeloAutomovel] = useState("");
+    const [anoFabricacaoAutomovel, setUpdateAnoFabricacaoAutomovel] = useState("");
+    const [anoModeloAutomovel, setUpdateAnoModeloAutomovel] = useState("");
+    const [valorVendaAutomovel, setUpdateValorVendaAutomovel] = useState("");
+    const [descricaoAutomovel, setUpdateDescricaoAutomovelAutomovel] = useState("");
+
+    const openModalMenu =  () =>{
         let modalEdit = document.querySelector("#modal-edit");
 
-        modalEdit.classList.toggle("show")
+        modalEdit.classList.toggle("show");
+    
     }
 
+    
     const closeEdit = ()=>{
         let modalEdit = document.querySelector("#modal-edit");
 
@@ -39,7 +50,37 @@ import { collection, getDocs} from 'firebase/firestore';
 
     const [cars, setCars] = useState([]);
 
-   
+   const confEdit = async (id) =>{
+
+         const docRef = doc( db, "cars", id);
+
+         let modalEdit = document.querySelector("#modal-edit");
+
+    setTimeout(()=>{
+        if(updateDoc){
+            updateDoc(
+                docRef,
+            { 
+                categoryCar: categoria,
+                barndCar: marcaAutomovel,
+                modelCar: modeloAutomovel,
+                yearManufacturingCar: anoFabricacaoAutomovel,
+                yearModelCar: anoModeloAutomovel,  
+                valueSaleCar: valorVendaAutomovel,
+                descriptionCar: descricaoAutomovel
+            });
+            alert("Sucesso na alteração do anúncio!");
+            modalEdit.classList.remove("show")
+            
+        }else{
+            alert("Não foi possível atualizar seu anúncio.")
+        }
+    },1500)
+   }
+
+  const handleDelite = async (id) =>{
+    await deleteDoc(doc(db,"cars",id));
+  }
 
     useEffect(() => {
         
@@ -116,9 +157,7 @@ import { collection, getDocs} from 'firebase/firestore';
             top="2px"
             right="2px"
             clipPath="polygon(50% 0%, 27% 20%, 76% 20%)"
-           >
-               
-           </Box>
+           ></Box>
      
            <Box
            position="absolute"
@@ -159,7 +198,8 @@ import { collection, getDocs} from 'firebase/firestore';
          <Box
          w="100%"
          bg="blue"
-         minH="calc(100vh - 70px)"
+         h="calc(100vh - 70px)"
+         overflowY="scroll"
          >
          <SimpleGrid 
               columns={{sm:"1",md:"2",lg:"3",xl:"4"}} 
@@ -168,23 +208,26 @@ import { collection, getDocs} from 'firebase/firestore';
          { 
             cars.map((cars) =>{
                 return (
+                      <>
                         <Box 
                         position="relative"
-                        mt="2rem"
-                        bg='tomato' 
+                        my="2rem"
+                        bg='#fff' 
                         w="300px"
                         mx="auto"
                         boxShadow="0 0 5px 0 rgba(0, 0, 0, .5)"
                         borderRadius="8px"
                         padding="55px 10px 20px 10px"
+                        key={cars.id}
                         >
                         <Flex
                         position="absolute"
                         top="1rem"
                         right="1rem"
                         >
+                       <a href="#" >
                         <Flex
-                            onClick={handlModalMenu}
+                            onClick={openModalMenu}
                             marginRight=".5rem"
                             w="25px"
                             h="25px"
@@ -201,7 +244,8 @@ import { collection, getDocs} from 'firebase/firestore';
                         >
                         <BiEdit/>
                         </Flex>
-
+                    </a>
+                    <a href="#" onClick={()=> handleDelite(cars.id)}>
                         <Flex
                             w="25px"
                             h="25px"
@@ -218,6 +262,7 @@ import { collection, getDocs} from 'firebase/firestore';
                         >
                         <ImBin/>
                         </Flex>
+                    </a>
                         </Flex>
                        <Box>
                             <Text>
@@ -298,125 +343,231 @@ import { collection, getDocs} from 'firebase/firestore';
                         </Box>
 
                         </Box>
+
+                        <Flex
+                    id="modal-edit"
+                    display="none"
+                    w="100%"
+                    minH="100vh"
+                    bg="rgba(0 , 0 , 0, .5)"
+                    p="50px 4%"
+                    position="absolute"
+                    top="0"
+                    left="0"
+                    >
+                    <Flex 
+                    w="100%"
+                    maxW="550px"
+                    h="calc(100vh - 100px)"
+                    boxShadow="0 0 10px 0 rgba(0,0,0,.5)"
+                    borderRadius="20px"
+                    mx="auto"
+                    p="60px 10px 20px 10px "
+                    direction="column"
+                    justify="center"
+                    position="relative"
+                    bg="#fff"
+                    >
+                        <Flex
+                        position="absolute"
+                        top="1rem"
+                        left="12rem"
+                        >
+                            <span>
+                                {
+                                    cars.id
+                                }
+                            </span>
+                        </Flex>
+
+                        <Flex
+                            onClick={closeEdit}
+                            position="absolute"
+                            top="1rem"
+                            right="1rem"
+                            h="30px"
+                            w="30px"
+                            justify="center"
+                            align="center"
+                            borderRadius="50%"
+                            border="2px solid #000"
+                            cursor="pointer"
+                            transition=".5s ease-in-out"
+                            _hover={{
+                                border:"2px solid transparent",
+                                boxShadow:"0 0 5px 0 rgba( 0 , 0 , 0 , .5)"
+                            }}
+                            >
+                                <CgClose/>
+                            </Flex>
+                            
+                    <Box
+                        overflowY="scroll"
+                        maxW="550px"
+                        h="calc(100vh - 100px)"
+                    >
+
+                    <Flex
+                        h="50px"
+                        w="96%"
+                        mx="auto"
+                        borderRadius="10px"
+                        border="2px dashed #000"
+                        align="center"
+                        justify="center"
+                        cursor="pointer"
+                    >
+                    <label
+                    id="label__file"
+                    for="input__file"
+                    w="96%"
+                    mx="auto"
+                    >
+                    Enviar a foto de seu automóvel
+                    </label>
+                    <Input
+                    id="input__file"
+                    display="none"
+                    mt="1rem"
+                    type="file"
+                    />
+                    </Flex>
+
+                    <Box 
+                    w="96%"
+                    mx="auto"
+                    >
+                    <Input
+                    mt="1rem"
+                    type="text"
+                    placeholder="Digite a alteração da categoria do seu automóvel"
+                    onChange={(event) =>{
+                        setUpdateCategoria(event.target.value);
+                    }} 
+                    />
+                    </Box>
+
+                    <Box 
+                    w="96%"
+                    mx="auto"
+                    >
+                <Input
+                    mt="1rem"
+                    type="text"
+                    placeholder="Digite a alteração da marca do seu automóvel"
+                    onChange={(event) =>{
+                        setUpdateMarcaAutomovel(event.target.value);
+                    }} 
+                    />
+                    </Box>
+
+                    <Box 
+                    w="96%"
+                    mx="auto"
+                    >
+                <Input
+                    mt="1rem"
+                    type="text"
+                    placeholder="Digite a alteração do modelo de seu automóvel"
+                    onChange={(event) =>{
+                        setUpdateModeloAutomovel(event.target.value);
+                    }} 
+                    />
+                    </Box>
+
+                <Box 
+                    w="96%"
+                    mx="auto"
+                    >
+                    <Input
+                    mt="1rem"
+                    type="text"
+                    placeholder="Digite a alteração o ano de fabricação do seu automóvel"
+                    onChange={(event) =>{
+                        setUpdateAnoFabricacaoAutomovel(event.target.value);
+                    }} 
+                    />
+                    </Box>
+
+                    <Box 
+                    w="96%"
+                    mx="auto"
+                    >
+                    <Input
+                    mt="1rem"
+                    type="text"
+                     placeholder="Digite a alteração do ano de modelo do seu automóvel"
+                     onChange={(event) =>{
+                        setUpdateAnoModeloAutomovel(event.target.value);
+                    }}
+                    />
+                    </Box>
+                    <Box 
+                    w="96%"
+                    mx="auto"
+                    >
+                <Input
+                    mt="1rem"
+                    type="text"
+                    placeholder="Digite a alteração do valor de venda do seu automóvel"
+                    onChange={(event) =>{
+                        setUpdateValorVendaAutomovel(event.target.value);
+                    }} 
+                    />
+                    </Box>
+                    <Box 
+                    w="96%"
+                    mx="auto"
+                    >
+                    <textarea 
+                    id="textarea__desc"
+                    placeholder="Digite a alteração de sua descrição do seu automóvel"
+                    onChange={(event) =>{
+                        setUpdateDescricaoAutomovelAutomovel(event.target.value);
+                    }} 
+                    ></textarea>
+                    </Box>
+
+
+                    <Box 
+                    w="96%"
+                    mx="auto"
+                    >
+                    <Button 
+                    w="100%" 
+                    onClick={()=> confEdit(cars.id)}
+                    >
+                           Confirmar
+                    </Button>
+                    </Box>
+
+                    
+                    <Box 
+                    w="96%"
+                    mx="auto"
+                    >
+                <Link
+                    href="/Logath"
+                >
+                    <Button 
+                            onClick={closeEdit}
+                            w="100%"  
+                            my="1rem"
+                            >
+                        Voltar
+                    </Button>
+                </Link>
+                </Box>
+                </Box>
+            </Flex>
+            </Flex>
+                        </>
                 )
             })
          }  
         </SimpleGrid>
          </Box>
-
-         <Flex
-           id="modal-edit"
-           display = "none"
-           position="absolute"
-           top="0"
-           left="0"
-           minH="100vh"
-           w="100%"
-           bg="rgba( 0 , 0 , 0 , .5)"
-           padding="40px 4%"
-         >
-             <Box
-              w="100%"
-              maxW="525px"
-              minH="calc(100vh - 180px)"
-              bg="#fff"
-              mx="auto"
-              borderRadius="10px"
-              position="relative"
-              padding="70px 10px 10px 10px"
-             >
-
-              <Flex
-              onClick={closeEdit}
-              position="absolute"
-              top="1rem"
-              right="1rem"
-              h="30px"
-              w="30px"
-              justify="center"
-              align="center"
-              borderRadius="50%"
-              border="2px solid #000"
-              cursor="pointer"
-              transition=".5s ease-in-out"
-              _hover={{
-                  border:"2px solid transparent",
-                  boxShadow:"0 0 5px 0 rgba( 0 , 0 , 0 , .5)"
-              }}
-              >
-                <CgClose/>
-              </Flex>
-
-              <Box
-              overflowY="scroll"
-               w="100%"
-               minH="calc(100vh - 180px)"
-               display="flex"
-               flexDirection="column"
-              >
-
-                <Input
-                    w="96%"
-                    mt="1rem"
-                    type="text"
-                    mx="auto"
-                    placeholder="Digite a alertação da categoria de seu automóvel"
-               />
-
-               <Input
-                    w="96%"
-                    mt="1rem"
-                    type="text"
-                    mx="auto"
-                    placeholder="Digite a alertação da marca de seu automóvel"
-               />
-
-            <Input
-                w="96%"
-                mt="1rem"
-                type="text"
-                mx="auto"
-                placeholder="Digite a alteração do modelo de seu automóvel"
-            />
-
-            <Input
-                w="96%"
-                mt="1rem"
-                type="text"
-                mx="auto"
-                placeholder="Digite a alteração do ano de fabricação de seu automóvel"
-           />
-
-            <Input
-                w="96%"
-                mt="1rem"
-                type="text"
-                mx="auto"
-                placeholder="Digite a alteração do ano do modelo de seu automóvel"
-           />
-
-            <Input
-                w="96%"
-                mt="1rem"
-                type="text"
-                mx="auto"
-                placeholder="Digite a alteração do valor de venda de seu automóvel"
-            />
-
-        <textarea 
-            id="textarea__desc"
-            height="150px"
-        ></textarea>
-
-            <Button
-              w="96%"
-              mx="auto"
-            >
-              Confirmar Alteração
-            </Button>
-              </Box>
-             </Box>
-         </Flex>
+   
         </>
     )
 }
