@@ -17,8 +17,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
     const registerUsers = async ()=>{
       let alertEspecifecCamp = document.querySelector("#alert__especifec_camp"),
-      alertAllCamp = document.querySelector("#alert__all_camp"),
-      alertSucessCamp = document.querySelector("#alert__sucess_camp");
+      alertAllCamp = document.querySelector("#alert__all_camp");
 
       let valueEmail =  document.querySelector("#input__email").value,
       valuePwd =  document.querySelector("#input__pwd").value;
@@ -40,7 +39,6 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
              alertAllCamp.classList.remove("show-alerts")
              alertEspecifecCamp.classList.remove("show-alerts")
-             alertSucessCamp.classList.toggle("show-alert-sucess")
              window.location= "/"
 
            }catch{
