@@ -24,7 +24,8 @@ import Head from "next/head"
 
     let valueEmail =  document.querySelector("#input__email").value,
         valuePwd =  document.querySelector("#input__pwd").value;
-    setTimeout(()=>{
+
+    setTimeout( async ()=>{
       if(valueEmail == "" && valuePwd == ""){
         alertAllCamp.classList.toggle("show-alerts")
         alertEspecifecCamp.classList.remove("show-alerts")
@@ -33,7 +34,7 @@ import Head from "next/head"
         alertAllCamp.classList.remove("show-alerts")
        }else{
         try{
-          const user =  signInWithEmailAndPassword(
+          const user = await signInWithEmailAndPassword(
             auth,
             loginEmail,
             loginPwd

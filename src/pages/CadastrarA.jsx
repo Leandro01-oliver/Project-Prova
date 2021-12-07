@@ -49,7 +49,7 @@ export default function CadastrarA() {
 
    /*CAP ELEMENTS ALERTS*/ 
           let   alertSucessCamp = document.querySelector("#alert__all_sucess_camp"),
-                alertEspecifecCamp = document.querySelector("##alert__especifec_camp"),
+                alertEspecifecCamp = document.querySelector("#alert__especifec_camp"),
                 alertAllCamp      = document.querySelector("#alert__all_camp"),
          /*CAP ELEMENTS INPUTS*/
          valueCategoria  = document.querySelector("#input__cartegory"),
@@ -60,13 +60,13 @@ export default function CadastrarA() {
          valueSales      = document.querySelector("#input__value_sales"),
           valueDesc  = document.querySelector("#textarea__desc");  
     
-      if(valueCategoria.value == "" && valueMarca.value == "" && valueModelo.value == "" && valueAnoFabricacao.value == "" && valueAnoModelo.value == "" && valueSales.value == "" && valueDesc.value == ""){
-        alertAllCamp.classList.toggle("show-alerts")
-        alertEspecifecCamp.classList.remove("show-alerts")
-       }else if(valueCategoria.value == "" || valueMarca.value == "" || valueModelo.value == "" || valueAnoFabricacao.value == "" || valueAnoModelo.value == "" || valueSales.value == "" || valueDesc.value == ""){
-        alertEspecifecCamp.classList.toggle("show-alerts")
-        alertAllCamp.classList.remove("show-alerts")
-       }else{
+          if(valueCategoria.value == "" && valueMarca.value == "" && valueModelo.value == "" && valueAnoFabricacao.value == "" && valueAnoModelo.value == "" && valueSales.value == "" && valueDesc.value == ""){
+            alertAllCamp.classList.toggle("show-alerts")
+            alertEspecifecCamp.classList.remove("show-alerts")
+           }else if(valueCategoria.value == "" || valueMarca.value == "" || valueModelo.value == "" || valueAnoFabricacao.value == "" || valueAnoModelo.value == "" || valueSales.value == "" || valueDesc.value == ""){
+            alertEspecifecCamp.classList.toggle("show-alerts")
+            alertAllCamp.classList.remove("show-alerts")
+           }else{
         if(addDoc){
             await  addDoc(carCollectionRef,{
                                          categoryCar: newCategoria,
@@ -78,9 +78,9 @@ export default function CadastrarA() {
                                          descriptionCar: newDescricaoAutomovel
                                       }
                                           ); 
-                                alertAllCamp.classList.remove("show-alerts")
-                                alertEspecifecCamp.classList.remove("show-alerts")
-                                alertSucessCamp.classList.toggle("show-alert-sucess")
+               alertSucessCamp.classList.toggle("show-alert-sucess")
+               alertEspecifecCamp.style.display="none"
+               alertAllCamp.style.display="none"
             window.location = "/Logath"
          }else{
            alert("Não foi possível efetuar seu anúncio.")
@@ -444,7 +444,7 @@ export default function CadastrarA() {
                            variant='left-accent'
                            w="96%"
                            mx="auto"
-                           my="1rem"
+                           mt="1.5rem"
                            borderRadius="5px"
                 >
                   
@@ -459,7 +459,7 @@ export default function CadastrarA() {
                            variant='left-accent'
                            w="96%"
                            mx="auto"
-                           my="1rem"
+                           mt="1.5rem"
                            borderRadius="5px"
                 >
                   
@@ -470,12 +470,12 @@ export default function CadastrarA() {
                 
                     <Alert 
                            display="none"
-                           id="alert__espeifec_camp"
+                           id="alert__especifec_camp"
                            status='error' 
                            variant='left-accent'
                            w="96%"
                            mx="auto"
-                           my="1rem"
+                           mt="1.5rem"
                            borderRadius="5px"
                            >
                         <AlertIcon />

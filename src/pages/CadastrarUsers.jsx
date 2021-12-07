@@ -18,7 +18,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
     const registerUsers = async ()=>{
       let alertEspecifecCamp = document.querySelector("#alert__especifec_camp"),
       alertAllCamp = document.querySelector("#alert__all_camp"),
-      alertSucess = document.querySelector("#alert__all_sucess_camp");
+      alertSucess = document.querySelector("#alert__sucess_camp");
 
       let valueEmail =  document.querySelector("#input__email").value,
       valuePwd =  document.querySelector("#input__pwd").value;
@@ -37,8 +37,11 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
               registerEmail,
               registerPwd
            )
+
+             alertAllCamp.classList.remove("show-alerts")
+             alertEspecifecCamp.classList.remove("show-alerts")
+             alertSucessCamp.classList.toggle("show-alert-sucess")
              window.location= "/"
-            alert("Cadastro realizado com Sucesso !");
 
            }catch{
            console.log("Não foi possível cadastrar-se na plataforma;");
@@ -149,7 +152,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
     <Alert 
                 display="none"
-                id="alert__all_sucess_camp"
+                id="alert__sucess_camp"
                 status='error' 
                 variant='left-accent'
                 w="96%"
