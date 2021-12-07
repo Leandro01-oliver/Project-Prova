@@ -47,7 +47,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
            console.log("Não foi possível cadastrar-se na plataforma;");
          }
          }
-      },1500)
+      },2000)
 
     }
 

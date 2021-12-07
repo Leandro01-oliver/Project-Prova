@@ -41,20 +41,20 @@ hr{
 #alert__sucess_camp.show-alert-sucess{
   display: flex;
   opacity: 1;
-  animation: animateAlert 1s ease-in-out;
+  animation: animateAlert .5s ease-in-out;
 }
 
 #alert__especifec_camp.show-alerts{
   display: flex;
   opacity: 1;
-  animation: animateAlert 1s ease-in-out;
+  animation: animateAlert .5s ease-in-out;
 }
 
 
 #alert__all_camp.show-alerts{
   display: flex;
   opacity: 1;
-  animation: animateAlert 1s ease-in-out;
+  animation: animateAlert .5s ease-in-out;
 }
 
 @keyframes animateAlert {

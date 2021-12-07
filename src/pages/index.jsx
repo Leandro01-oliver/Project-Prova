@@ -19,8 +19,7 @@ import Head from "next/head"
 
   const redirectionLogath = async ()=>{
     let alertEspecifecCamp = document.querySelector("#alert__especifec_camp"),
-        alertAllCamp = document.querySelector("#alert__all_camp"),
-        alertSucess = document.querySelector("#alert__sucess_camp");
+        alertAllCamp = document.querySelector("#alert__all_camp");
 
     let valueEmail =  document.querySelector("#input__email").value,
         valuePwd =  document.querySelector("#input__pwd").value;
@@ -41,14 +40,13 @@ import Head from "next/head"
          )
           alertAllCamp.classList.remove("show-alerts")
           alertEspecifecCamp.classList.remove("show-alerts")
-          alertSucess.classList.toggle("show-alert-sucess")
           window.location = "/Logath"
          }catch{
          alert("Senha ou Email errados.")
        }
       }
       
-    },1500)
+    },2000)
     
   }
 

@@ -96,7 +96,7 @@ import { collection, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firesto
             }
            }
         }
-      ,1500)
+      ,2000)
    }
 
   const handleDelite = async (id) =>{
