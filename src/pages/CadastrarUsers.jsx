@@ -22,7 +22,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
       let valueEmail =  document.querySelector("#input__email").value,
       valuePwd =  document.querySelector("#input__pwd").value;
 
-      setTimeout(()=>{
+      setTimeout( async ()=>{
         if(valueEmail == "" && valuePwd == ""){
           alertAllCamp.classList.toggle("show-alerts")
           alertEspecifecCamp.classList.remove("show-alerts")
@@ -31,7 +31,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
           alertAllCamp.classList.remove("show-alerts")
          }else{
           try{
-            const user =  createUserWithEmailAndPassword(
+            const user =  await createUserWithEmailAndPassword(
               auth,
               registerEmail,
               registerPwd
