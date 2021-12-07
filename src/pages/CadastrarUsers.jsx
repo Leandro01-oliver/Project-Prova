@@ -1,8 +1,10 @@
-import {Flex,Button,Input,InputGroup,InputRightElement} from "@chakra-ui/react"
+import {Flex,Button,Input,InputGroup,InputRightElement,Alert,AlertIcon} from "@chakra-ui/react"
 import React from "react"
 import { auth } from "../config/firebaseConnection"
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { useState } from "react"
+import Image from "next/image";
+import LogoImg from "../../public/logo.png";
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
   function CadastrarUsers() {
@@ -14,8 +16,23 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
     const [registerPwd, setRegisterPwd] = useState("");
 
     const registerUsers = async ()=>{
-        try{
-            const user = await createUserWithEmailAndPassword(
+      let alertEspecifecCamp = document.querySelector("#alert__especifec_camp"),
+      alertAllCamp = document.querySelector("#alert__all_camp"),
+      alertSucess = document.querySelector("#alert__all_sucess_camp");
+
+      let valueEmail =  document.querySelector("#input__email").value,
+      valuePwd =  document.querySelector("#input__pwd").value;
+
+      setTimeout(()=>{
+        if(valueEmail == "" && valuePwd == ""){
+          alertAllCamp.classList.toggle("show-alerts")
+          alertEspecifecCamp.classList.remove("show-alerts")
+        }else if(valueEmail == "" || valuePwd == ""){
+          alertEspecifecCamp.classList.toggle("show-alerts")
+          alertAllCamp.classList.remove("show-alerts")
+         }else{
+          try{
+            const user =  createUserWithEmailAndPassword(
               auth,
               registerEmail,
               registerPwd
@@ -26,6 +43,9 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
            }catch{
            console.log("Não foi possível cadastrar-se na plataforma;");
          }
+         }
+      },1500)
+
     }
 
     return (
@@ -49,8 +69,21 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
       bg="#fff"
      >
   
+     <Flex
+        my="1rem"
+        mx="auto"
+        cursor="pointer"
+        >
+        <Image
+        src={LogoImg}
+        alt="Picture of the author"
+        width={80}
+        height={80}
+        />
+        </Flex>
       <Input
-      mt="1rem"
+       id="input__email"
+       mt="1rem"
        type="text"
        placeholder="Informe o seu email"
        onChange = {(event)=>{
@@ -59,6 +92,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
       />
    <InputGroup mt="1rem">
       <Input
+        id="input__pwd"
         pr='4.5rem'
         type={show ? 'text' : 'password'}
         placeholder='Informe o sua senha'
@@ -84,6 +118,49 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
           </Flex>
       </InputRightElement>
     </InputGroup>
+
+    <Alert 
+          display="none"
+          id="alert__all_camp"
+          status='error' 
+          variant='left-accent'
+          w="96%"
+          mx="auto"
+          mt="1rem"
+          borderRadius="5px"
+          >
+        <AlertIcon />
+        Preencha todos os campos de cadastro de login !
+    </Alert>
+    <Alert 
+                display="none"
+                id="alert__especifec_camp"
+                status='error' 
+                variant='left-accent'
+                w="96%"
+                mx="auto"
+                mt="1rem"
+                borderRadius="5px"
+                >
+            <AlertIcon />
+            Preencha os campos que estão faltando !
+    </Alert>
+
+
+    <Alert 
+                display="none"
+                id="alert__all_sucess_camp"
+                status='error' 
+                variant='left-accent'
+                w="96%"
+                mx="auto"
+                mt="1rem"
+                borderRadius="5px"
+                >
+            <AlertIcon />
+            Preencha sucesso no seu cadastro de login !
+    </Alert>
+
 
     <Button 
             w="100%"  

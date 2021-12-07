@@ -6,19 +6,18 @@ import {
          SimpleGrid,
          Button,
          Text,
-         Input
+         Input,
+         Alert,
+         AlertIcon
        } from "@chakra-ui/react";
-import { AiOutlineReload } from 'react-icons/ai'
 import { BiEdit } from 'react-icons/bi';
 import { ImBin } from 'react-icons/im';
-import { CgClose } from 'react-icons/cg';
 import Image from "next/image";
 import LogoImg from "../../public/logo.png";
 import Link from "next/link";
-import { auth, db } from '../config/firebaseConnection';
+import { auth, db, storage } from '../config/firebaseConnection';
 import { signOut } from "firebase/auth"
 import { collection, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore';
-import { animate } from 'framer-motion';
 
 
 
@@ -28,6 +27,7 @@ import { animate } from 'framer-motion';
     const [openMneu,setOpenMenu] = useState(false);
     const handlMenu = () =>{setOpenMenu(!openMneu)}
 
+    
     const [categoria, setUpdateCategoria] = useState("");
     const [marcaAutomovel, setUpdateMarcaAutomovel] = useState("");
     const [modeloAutomovel, setUpdateModeloAutomovel] = useState("");
@@ -43,48 +43,67 @@ import { animate } from 'framer-motion';
     
     }
 
-    
-    const closeEdit = ()=>{
-        let modalEdit = document.querySelector("#modal-edit");
 
-        modalEdit.classList.remove("show")
-    }
 
     const [cars, setCars] = useState([]);
     
+
+
    const confEdit = async (id) =>{
 
          const docRef = doc( db, "cars", id);
 
-         let modalEdit = document.querySelector("#modal-edit");
-
+       
+          /*CAP ELEMENTS ALERTS*/ 
+       let   alertSucessCamp = document.querySelector("#alert__all_sucess"),
+             alertEspecifecCamp = document.querySelector("#alert__especifec_camp"),
+             alertAllCamp      = document.querySelector("#alert__all_camp"),
+            /*CAP ELEMENTS INPUTS*/
+            valueCategoria  = document.querySelector("#input__cartegory"),
+            valueMarca      = document.querySelector("#input__brand"),
+            valueModelo     = document.querySelector("#input__model"),
+        valueAnoFabricacao  = document.querySelector("#input__year_manufacturing"),
+            valueAnoModelo  = document.querySelector("#input__year_model"),
+            valueSales      = document.querySelector("#input__value_sales"),
+             valueDesc  = document.querySelector("#textarea__desc");              
+           
     setTimeout(()=>{
-        if(updateDoc){
-            updateDoc(
-                docRef,
-            { 
-                categoryCar: categoria,
-                barndCar: marcaAutomovel,
-                modelCar: modeloAutomovel,
-                yearManufacturingCar: anoFabricacaoAutomovel,
-                yearModelCar: anoModeloAutomovel,  
-                valueSaleCar: valorVendaAutomovel,
-                descriptionCar: descricaoAutomovel
-            });
-            alert("Sucesso na alteração do anúncio!");
-            modalEdit.classList.remove("show")
-            
-        }else{
-            alert("Não foi possível atualizar seu anúncio.")
+        if(valueCategoria.value == "" && valueMarca.value == "" && valueModelo.value == "" && valueAnoFabricacao.value == "" && valueAnoModelo.value == "" && valueSales.value == "" && valueDesc.value == ""){
+            alertAllCamp.classList.toggle("show-alerts")
+            alertEspecifecCamp.classList.remove("show-alerts")
+           }else if(valueCategoria.value == "" || valueMarca.value == "" || valueModelo.value == "" || valueAnoFabricacao.value == "" || valueAnoModelo.value == "" || valueSales.value == "" || valueDesc.value == ""){
+            alertEspecifecCamp.classList.toggle("show-alerts")
+            alertAllCamp.classList.remove("show-alerts")
+           }else{
+            if(updateDoc){
+                updateDoc(
+                    docRef,
+                { 
+                    categoryCar: categoria,
+                    barndCar: marcaAutomovel,
+                    modelCar: modeloAutomovel,
+                    yearManufacturingCar: anoFabricacaoAutomovel,
+                    yearModelCar: anoModeloAutomovel,  
+                    valueSaleCar: valorVendaAutomovel,
+                    descriptionCar: descricaoAutomovel
+                });
+                alertAllCamp.classList.remove("show-alerts")
+                alertEspecifecCamp.classList.remove("show-alerts")
+                alertSucessCamp.classList.toggle("show-alert-sucess")
+                
+            }else{
+                alert("Não foi possível atualizar seu anúncio.")
+            }
+           }
         }
-    },1500)
+      ,1500)
    }
 
   const handleDelite = async (id) =>{
 
         if(deleteDoc){
             await deleteDoc(doc(db,"cars",id));
-            alert("Anúncio excluirdo com Sucesso!")
+            alert("Anúncio excluido com Sucesso!")
             location.reload()
         }else{
             alert("Não foi possível excluir seu anúncio.")
@@ -93,7 +112,12 @@ import { animate } from 'framer-motion';
   }
 
     useEffect(() => {
-        
+
+       
+       
+        /*CAP ELEMENTS ALERTS*/ 
+
+
         const carCollectionRef = collection( db , "cars" );
 
         const getUsers = async () => {
@@ -112,13 +136,6 @@ import { animate } from 'framer-motion';
             await signOut(auth);
     }
 
-    const [animaLabelOne, setAnimaLabelOne] = useState(false);
-    const [animaLabelTwo, setAnimaLabelTwo] = useState(false);
-    const [animaLabelThree, setAnimaLabelThree] = useState(false);
-    const [animaLabelFour, setAnimaLabelFour] = useState(false);
-    const [animaLabelFive, setAnimaLabelFive] = useState(false);
-    const [animaLabelSix, setAnimaLabelSix] = useState(false);
-    const [animaLabelSeven, setAnimaLabelSeven] = useState(false);
 
     return (
         <>
@@ -362,7 +379,7 @@ import { animate } from 'framer-motion';
 
                         </Box>
 
-                        <Flex
+                   <Flex
                     id="modal-edit"
                     display="none"
                     w="100%"
@@ -370,6 +387,7 @@ import { animate } from 'framer-motion';
                     bg="rgba(0 , 0 , 0, .5)"
                     p="50px 4%"
                     position="absolute"
+                    zIndex="100"
                     top="0"
                     left="0"
                     >
@@ -386,34 +404,7 @@ import { animate } from 'framer-motion';
                     position="relative"
                     bg="#fff"
                     >
-                        <Flex
-                        position="absolute"
-                        top="1rem"
-                        left="12rem"
-                        >
-
-                        </Flex>
-
-                        <Flex
-                            onClick={closeEdit}
-                            position="absolute"
-                            top="1rem"
-                            right="1rem"
-                            h="30px"
-                            w="30px"
-                            justify="center"
-                            align="center"
-                            borderRadius="50%"
-                            border="2px solid #000"
-                            cursor="pointer"
-                            transition=".5s ease-in-out"
-                            _hover={{
-                                border:"2px solid transparent",
-                                boxShadow:"0 0 5px 0 rgba( 0 , 0 , 0 , .5)"
-                            }}
-                            >
-                                <CgClose/>
-                            </Flex>
+            
                             
                     <Box
                         overflowY="scroll"
@@ -421,7 +412,7 @@ import { animate } from 'framer-motion';
                         h="calc(100vh - 100px)"
                     >
 
-                    <Flex
+                    {/* <Flex
                         h="50px"
                         w="96%"
                         mx="auto"
@@ -445,98 +436,88 @@ import { animate } from 'framer-motion';
                     mt="1rem"
                     type="file"
                     />
-                    </Flex>
+                    </Flex> */}
 
-                    <Flex
+            <Flex
+                    justify="center"
+                    cursor="pointer"
+                    >
+                    <Image
+                    src={LogoImg}
+                    alt="Picture of the author"
+                    width={80}
+                    height={80}
+                    />
+         </Flex>
+
+             <Box mt="1rem">
+                    <Text
+                    ml="1rem"
+                    >
+                    Categoria do Automóvel :
+                    </Text>
+            <Flex
                     w="96%"
                     mx="auto"
-                    h="50px"
+                    h="45px"
                     border= "2px solid #000"
-                    mt="1.5rem"
+                    mt=".25rem"
                     borderRadius="5px"
                     align="center"
                     justify="center"
-                    position="relative"
                     transition=".5s ease-in-out"
-                    p={animaLabelOne ? '35px 10px 20px 10px' : '10px'}
                     _hover={{
                         border:"2px solid transparent",
                         boxShadow:"0 0 5px 0 rgba( 0 , 0, 0, .5)"
                     }}
                     >
-                    <Text
-                    position="absolute"
-                    top={animaLabelOne ? '.25rem' : '-.9rem'}
-                    fontSize={animaLabelOne ? '12px' : '14px'}
-                    left="1rem"
-                    bg={ animaLabelOne ? 'transparent' : '#fff'}
-                    p="0 5px"
-                    onChange={(event) =>{
-                        setAnimaLabelOne(event.target.value);
-                    }}
-                    >
-                    Categoria do Automóvel :
-                    </Text>
                     <Input
-                    id="input__cartegory_car"
-                    onClick={()=>{
-                        setAnimaLabelOne(!animaLabelOne);
-                    } }
-
                         w="100%"
-                        p="0"
-                        h="50px"
+                        p="0 10px"
+                        h="45px"
                         type="text"
                         border="0"
+                        id="input__cartegory"
                         borderRadius="5px!important"
                         _focus={{
                             boxShadow:"none" 
                         }}
-                    onChange={(event) =>{
-                        setUpdateCategoria(event.target.value);
-                    }} 
+                        onChange={(event) =>{
+                          setUpdateCategoria(event.target.value);
+                        }}  
                     />
                     </Flex>
 
-                    <Flex
+            </Box>
+
+            <Box mt="1rem">
+                      <Text
+                    ml="1rem"
+                    >
+                     Marca do Automóvel :
+                    </Text>
+            <Flex
                     w="96%"
                     mx="auto"
-                    h="50px"
+                    h="45px"
                     border= "2px solid #000"
-                    mt="1.5rem"
+                    mt=".25rem"
                     borderRadius="5px"
                     align="center"
                     justify="center"
-                    position="relative"
                     transition=".5s ease-in-out"
-                    p={animaLabelOne ? '35px 10px 20px 10px' : '10px'}
                     _hover={{
                         border:"2px solid transparent",
                         boxShadow:"0 0 5px 0 rgba( 0 , 0, 0, .5)"
                     }}
                     >
-                    <Text
-                    position="absolute"
-                    top={animaLabelTwo ? '.25rem' : '-.9rem'}
-                    fontSize={animaLabelTwo ? '12px' : '14px'}
-                    left="1rem"
-                    bg={ animaLabelTwo ? 'transparent' : '#fff'}
-                    p="0 5px"
-                    onChange={(event) =>{
-                        animaLabelTwo(event.target.value);
-                    }}
-                    >
-                    Marca do Automóvel :
-                    </Text>
                 <Input
-                   onClick={()=>{
-                    setAnimaLabelTwo(!animaLabelTwo)
-                } }
                     w="100%"
-                    p="0"
+                    p="0 10px"
                     h="50px"
                     type="text"
                     border="0"
+                    id="input__brand"
                  borderRadius="5px!important"
                  _focus={{
                      boxShadow:"none" 
@@ -546,154 +527,125 @@ import { animate } from 'framer-motion';
                     }} 
                     />
                     </Flex>
-
-                    <Flex
+         </Box>
+                   
+         <Box mt="1rem">
+                      <Text
+                    ml="1rem"
+                    >
+                     Modelo do Automóvel :
+                    </Text>
+            <Flex
                     w="96%"
                     mx="auto"
-                    h="50px"
+                    h="45px"
                     border= "2px solid #000"
-                    mt="1.5rem"
+                    mt=".25rem"
                     borderRadius="5px"
                     align="center"
                     justify="center"
-                    position="relative"
                     transition=".5s ease-in-out"
-                    p={animaLabelThree ? '35px 10px 20px 10px' : '10px'}
                     _hover={{
                         border:"2px solid transparent",
                         boxShadow:"0 0 5px 0 rgba( 0 , 0, 0, .5)"
                     }}
                     >
-                    <Text
-                    position="absolute"
-                    top={animaLabelThree ? '.25rem' : '-.9rem'}
-                    fontSize={animaLabelThree ? '12px' : '14px'}
-                    left="1rem"
-                    bg={ animaLabelThree ? 'transparent' : '#fff'}
-                    p="0 5px"
-                    onChange={(event) =>{
-                        animaLabelThree(event.target.value);
-                    }}
-                    >
-                    Modelo do Automóvel :
-                    </Text>
                 <Input
-                   onClick={()=>{
-                    setAnimaLabelThree(!animaLabelThree)
-                } }
                     w="100%"
-                    p="0"
+                    p="0 10px"
                     h="50px"
                     type="text"
+                    id="input__model"
                     border="0"
                     borderRadius="5px!important"
                     _focus={{
                         boxShadow:"none" 
                     }}
                     onChange={(event) =>{
-                        setUpdateModeloAutomovel(event.target.value);
+                      setUpdateModeloAutomovel(event.target.value);
                     }} 
                     />
                     </Flex>
+              </Box>
 
-                    <Flex
+              <Box mt="1rem">
+                      <Text
+                    ml="1rem"
+                    >
+                     Ano de Fabricação do Automóvel :
+                    </Text>
+            <Flex
                     w="96%"
                     mx="auto"
-                    h="50px"
+                    h="45px"
                     border= "2px solid #000"
-                    mt="1.5rem"
+                    mt=".25rem"
                     borderRadius="5px"
                     align="center"
                     justify="center"
-                    position="relative"
                     transition=".5s ease-in-out"
-                    p={ animaLabelFour ? '35px 10px 20px 10px' : '10px'}
                     _hover={{
                         border:"2px solid transparent",
                         boxShadow:"0 0 5px 0 rgba( 0 , 0, 0, .5)"
                     }}
                     >
-                    <Text
-                    position="absolute"
-                    top={ animaLabelFour ? '.25rem' : '-.9rem'}
-                    fontSize={ animaLabelFour ? '12px' : '14px'}
-                    left="1rem"
-                    bg={ animaLabelFour ? 'transparent' : '#fff'}
-                    p="0 5px"
-                    onChange={(event) =>{
-                        animaLabelFour(event.target.value);
-                    }}
-                    >
-                       Ano de Fabricação do Automóvel :
-                    </Text>
                     <Input
-                        onClick={()=>{      
-                          setAnimaLabelFour(!animaLabelFour)
-                        } }
                         w="100%"
-                        p="0"
+                        maxLength="10"
+                        id="input__year_manufacturing"
+                        onKeyPress = {()=>{
+                            let inputYearManufacturing = document.querySelector("#input__year_manufacturing");
+  
+                            if(inputYearManufacturing.value.length == 2 ||  inputYearManufacturing.value.length == 5)
+                             inputYearManufacturing.value += "/"
+                       }}
+                        p="0 10px"
                         h="50px"
                         type="text"
                         border="0"
-                        maxLength="10"
                         borderRadius="5px!important"
                         _focus={{
                             boxShadow:"none" 
                         }}
-                        id="input__date_manufacturing"
-                        onKeyPress = {()=>{
-                            let inputDateManufacturing = document.querySelector("#input__date_manufacturing");
-  
-                            if(inputDateManufacturing.value.length == 2 ||  inputDateManufacturing.value.length == 5)
-                             inputDateManufacturing.value += "/"
-                       }}
                     onChange={(event) =>{
-                        setUpdateAnoFabricacaoAutomovel(event.target.value);
+                      setUpdateAnoFabricacaoAutomovel(event.target.value);
                     }} 
                     />
                     </Flex>
+               </Box>
 
-                    <Flex
+               <Box mt="1rem">
+                      <Text
+                    ml="1rem"
+                    >
+                     Ano de Modelo do Automóvel :
+                    </Text>
+            <Flex
                     w="96%"
                     mx="auto"
-                    h="50px"
+                    h="45px"
                     border= "2px solid #000"
-                    mt="1.5rem"
+                    mt=".25rem"
                     borderRadius="5px"
                     align="center"
                     justify="center"
-                    position="relative"
                     transition=".5s ease-in-out"
-                    p={ animaLabelFive ? '35px 10px 20px 10px' : '10px'}
                     _hover={{
                         border:"2px solid transparent",
                         boxShadow:"0 0 5px 0 rgba( 0 , 0, 0, .5)"
                     }}
                     >
-                    <Text
-                    position="absolute"
-                    top={ animaLabelFive ? '.25rem' : '-.9rem'}
-                    fontSize={ animaLabelFive ? '12px' : '14px'}
-                    left="1rem"
-                    bg={ animaLabelFive ? 'transparent' : '#fff'}
-                    p="0 5px"
-                    onChange={(event) =>{
-                        animaLabelFive(event.target.value);
-                    }}
-                    >
-                       Ano de Modelo do Automóvel :
-                    </Text>
                     <Input
-                     id="input__date_model"
-                     maxLength="10"
-                     w="100%"
-                     onKeyPress = {()=>{
-                          let inputDateModel = document.querySelector("#input__date_model");
+                    w="100%"
+                    id="input__year_model"
+                    maxLength="10"
+                    onKeyPress = {()=>{
+                         let inputYearModel = document.querySelector("#input__year_model");
 
-                          if(inputDateModel.value.length == 2 ||  inputDateModel.value.length == 5)
-                           inputDateModel.value += "/"
-                     }}
-                    p="0"
+                         if(inputYearModel.value.length == 2 ||  inputYearModel.value.length == 5)
+                          inputYearModel.value += "/"
+                    }}
+                    p="0 10px"
                     h="50px"
                     type="text"
                     border="0"
@@ -702,55 +654,43 @@ import { animate } from 'framer-motion';
                        boxShadow:"none" 
                     }}
                      onChange={(event) =>{
-                        setUpdateAnoModeloAutomovel(event.target.value);
+                      setUpdateAnoModeloAutomovel(event.target.value);
                     }}
                     />
                     </Flex>
+                </Box>
 
-                    <Flex
+                  <Box mt="1rem">
+                      <Text
+                    ml="1rem"
+                    >
+                     Valor de Venda do Automóvel :
+                    </Text>
+            <Flex
                     w="96%"
                     mx="auto"
-                    h="50px"
+                    h="45px"
                     border= "2px solid #000"
-                    mt="1.5rem"
+                    mt=".25rem"
                     borderRadius="5px"
                     align="center"
                     justify="center"
-                    position="relative"
                     transition=".5s ease-in-out"
-                    p={ animaLabelSix ? '35px 10px 20px 10px' : '10px'}
                     _hover={{
                         border:"2px solid transparent",
                         boxShadow:"0 0 5px 0 rgba( 0 , 0, 0, .5)"
                     }}
                     >
-                    <Text
-                    position="absolute"
-                    top={ animaLabelSix ? '.25rem' : '-.9rem'}
-                    fontSize={ animaLabelSix ? '12px' : '14px'}
-                    left="1rem"
-                    bg={ animaLabelSix ? 'transparent' : '#fff'}
-                    p="0 5px"
-                    onChange={(event) =>{
-                        animaLabelSix(event.target.value);
-                    }}
-                    >
-                        Valor de Venda do Automóvel :
-                    </Text>
                 <Input
-                    id="input__value_sales"
-                    w="100%"
-                    onKeyPress = {() =>{
-                       let valueSales = document.querySelector("#input__value_sales");
+                  id="input__value_sales"
+                  w="100%"
+                  onKeyPress = {() =>{
+                      let valueSales = document.querySelector("#input__value_sales");
 
-                      if(valueSales.value.length == 0)
-                           valueSales.value += "R$";
-                    }}
-
-                    onClick={()=>{
-                        setAnimaLabelSix(!animaLabelSix)
-                    } }
-                    p="0"
+                    if(valueSales.value.length == 0)
+                          valueSales.value += "R$";
+                  }}
+                    p="0 10px"
                     h="50px"
                     type="text"
                     border="0"
@@ -763,44 +703,79 @@ import { animate } from 'framer-motion';
                     }} 
                     />
                   </Flex>
+             </Box>
 
+           <Box
+           my="1rem"
+           >
+             <Text
+               ml="1rem"
+               mb=".25rem"
+             >
+                        Descrição do Automóvel :
+                    </Text>
                     <Flex 
                     w="96%"
                     mx="auto"
                     h="150px"
                     border= "2px solid #000"
-                    my="1rem"
                     borderRadius="5px"
-                    p="10px 8px"
+                    p="5px"
                     align="center"
                     justify="center"
-                    position="relative"
                     >
-                   <Text
-                    position="absolute"
-                    top={ animaLabelSeven ? '.2rem' : '-.9rem'}
-                    fontSize={ animaLabelSeven ? '12px' : '14px'}
-                    left="1rem"
-                    p="0 5px"
-                    bg={ animaLabelSeven ? 'transparent' : '#fff'}
-                    onChange={(event) =>{
-                        animaLabelSeven(event.target.value);
-                    }}
-                    >
-                        Descrição do Automóvel :
-                    </Text>
                     <textarea 
                     id="textarea__desc"
-                    onClick={()=>{
-                     setAnimaLabelSeven(!animaLabelSeven)   
-                    } }
                     onChange={(event) =>{
-                        setUpdateDescricaoAutomovelAutomovel(event.target.value);
+                      setUpdateDescricaoAutomovelAutomovel(event.target.value);
                     }} 
                     ></textarea>
                 </Flex>
+                </Box>
+                <Alert 
+                           display="none"    
+                           id="alert__all_camp"
+                           status='error' 
+                           variant='left-accent'
+                           w="96%"
+                           mx="auto"
+                           my="1rem"
+                           borderRadius="5px"
+                >
+                  
+                        <AlertIcon />
+                        Preencha todos os campos
+                    </Alert>
 
+                    <Alert 
+                           display="none"    
+                           id="alert__all_sucess"
+                           status='success' 
+                           variant='left-accent'
+                           w="96%"
+                           mx="auto"
+                           my="1rem"
+                           borderRadius="5px"
+                >
+                  
+                        <AlertIcon />
+                        Anúncio Editado com Sucesso!
+                    </Alert>
 
+                
+                    <Alert 
+                           display="none"
+                           id="alert__especifec_camp"
+                           status='error' 
+                           variant='left-accent'
+                           w="96%"
+                           mx="auto"
+                           my="1rem"
+                           borderRadius="5px"
+                           >
+                        <AlertIcon />
+                        Preencha os campos que estão faltando !
+                    </Alert>
                     <Box 
                     w="96%"
                     mx="auto"
@@ -818,17 +793,14 @@ import { animate } from 'framer-motion';
                     w="96%"
                     mx="auto"
                     >
-                <Link
-                    href="/Logath"
-                >
+
                     <Button 
-                            onClick={closeEdit}
-                            w="100%"  
-                            my="1rem"
-                            >
+                        w="100%"  
+                        my="1rem"
+                        onClick={()=>{window.location = "/Logath"}}
+                     >
                         Voltar
                     </Button>
-                </Link>
                 </Box>
                 </Box>
             </Flex>

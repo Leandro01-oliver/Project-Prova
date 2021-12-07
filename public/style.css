@@ -14,6 +14,7 @@ html,body{
 
 ::-webkit-scrollbar-thumb{
   background-color: rgba(250, 250, 250, .5);
+  border-radius: 80px;
 }
 
 #text-btn.active-reload{
@@ -32,12 +33,46 @@ hr{
   width: 100%;
   height:140px;
   border-radius: 5px;
-  padding: 20px 0;
+  padding: 8px 2px;
   border: none;
   outline: none;
 }
 
+#alert__all_sucess_camp.show-alert-sucess{
+  display: flex;
+  opacity: 1;
+  animation: animateAlert 1s ease-in-out;
+}
 
+#alert__especifec_camp.show-alerts{
+  display: flex;
+  opacity: 1;
+  animation: animateAlert 1s ease-in-out;
+}
+
+#alert__number_camp.show-alerts{
+  display: flex;
+  opacity: 1;
+  animation: animateAlert 1s ease-in-out;
+}
+
+#alert__all_camp.show-alerts{
+  display: flex;
+  opacity: 1;
+  animation: animateAlert 1s ease-in-out;
+}
+
+@keyframes animateAlert {
+  0%{
+      opacity: 0;
+  }
+  50%{
+     opacity: .25;
+  }
+  100%{
+    opacity: 1;
+  }
+}
 
 #modal-edit.show{
   display: flex;
