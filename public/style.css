@@ -38,7 +38,7 @@ hr{
   outline: none;
 }
 
-#alert__all_sucess_camp.show-alert-sucess{
+#alert__sucess_camp.show-alert-sucess{
   display: flex;
   opacity: 1;
   animation: animateAlert 1s ease-in-out;
@@ -50,11 +50,6 @@ hr{
   animation: animateAlert 1s ease-in-out;
 }
 
-#alert__number_camp.show-alerts{
-  display: flex;
-  opacity: 1;
-  animation: animateAlert 1s ease-in-out;
-}
 
 #alert__all_camp.show-alerts{
   display: flex;

@@ -55,7 +55,7 @@ import { collection, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firesto
 
        
           /*CAP ELEMENTS ALERTS*/ 
-       let   alertSucessCamp = document.querySelector("#alert__all_sucess"),
+       let   alertSucessCamp = document.querySelector("#alert__sucess_camp"),
              alertEspecifecCamp = document.querySelector("#alert__especifec_camp"),
              alertAllCamp      = document.querySelector("#alert__all_camp"),
             /*CAP ELEMENTS INPUTS*/
@@ -67,7 +67,7 @@ import { collection, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firesto
             valueSales      = document.querySelector("#input__value_sales"),
              valueDesc  = document.querySelector("#textarea__desc");              
            
-    setTimeout(()=>{
+    setTimeout( async ()=>{
         if(valueCategoria.value == "" && valueMarca.value == "" && valueModelo.value == "" && valueAnoFabricacao.value == "" && valueAnoModelo.value == "" && valueSales.value == "" && valueDesc.value == ""){
             alertAllCamp.classList.toggle("show-alerts")
             alertEspecifecCamp.classList.remove("show-alerts")
@@ -76,7 +76,7 @@ import { collection, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firesto
             alertAllCamp.classList.remove("show-alerts")
            }else{
             if(updateDoc){
-                updateDoc(
+               await updateDoc(
                     docRef,
                 { 
                     categoryCar: categoria,
@@ -749,7 +749,7 @@ import { collection, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firesto
 
                     <Alert 
                            display="none"    
-                           id="alert__all_sucess"
+                           id="alert__sucess_camp"
                            status='success' 
                            variant='left-accent'
                            w="96%"

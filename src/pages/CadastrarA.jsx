@@ -48,7 +48,7 @@ export default function CadastrarA() {
     const carCollectionRef = collection( db , "cars" );
 
    /*CAP ELEMENTS ALERTS*/ 
-          let   alertSucessCamp = document.querySelector("#alert__all_sucess_camp"),
+          let   alertSucessCamp = document.querySelector("#alert__sucess_camp"),
                 alertEspecifecCamp = document.querySelector("#alert__especifec_camp"),
                 alertAllCamp      = document.querySelector("#alert__all_camp"),
          /*CAP ELEMENTS INPUTS*/
@@ -454,7 +454,7 @@ export default function CadastrarA() {
 
                     <Alert 
                            display="none"    
-                           id="alert__all_sucess_camp"
+                           id="alert__sucess_camp"
                            status='success' 
                            variant='left-accent'
                            w="96%"

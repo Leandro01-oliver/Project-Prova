@@ -20,7 +20,7 @@ import Head from "next/head"
   const redirectionLogath = async ()=>{
     let alertEspecifecCamp = document.querySelector("#alert__especifec_camp"),
         alertAllCamp = document.querySelector("#alert__all_camp"),
-        alertSucess = document.querySelector("#alert__all_sucess_camp");
+        alertSucess = document.querySelector("#alert__sucess_camp");
 
     let valueEmail =  document.querySelector("#input__email").value,
         valuePwd =  document.querySelector("#input__pwd").value;
@@ -156,7 +156,7 @@ import Head from "next/head"
 
     <Alert 
                 display="none"
-                id="alert__all_sucess_camp"
+                id="alert__sucess_camp"
                 status='error' 
                 variant='left-accent'
                 w="96%"
