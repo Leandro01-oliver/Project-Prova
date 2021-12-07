@@ -103,7 +103,6 @@ export default function CadastrarA() {
       w="100%"
       maxW="550px"
       h="calc(100vh - 100px)"
-      boxShadow="0 0 10px 0 rgba(0,0,0,.5)"
       borderRadius="20px"
       mx="auto"
       p="20px 10px "
