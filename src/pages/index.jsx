@@ -19,7 +19,8 @@ import Head from "next/head"
 
   const redirectionLogath = async ()=>{
     let alertEspecifecCamp = document.querySelector("#alert__especifec_camp"),
-        alertAllCamp = document.querySelector("#alert__all_camp");
+        alertAllCamp = document.querySelector("#alert__all_camp"),
+        alertErroCamp = document.querySelector("#alert__error_camp");
 
     let valueEmail =  document.querySelector("#input__email").value,
         valuePwd =  document.querySelector("#input__pwd").value;
@@ -28,9 +29,11 @@ import Head from "next/head"
       if(valueEmail == "" && valuePwd == ""){
         alertAllCamp.classList.toggle("show-alerts")
         alertEspecifecCamp.classList.remove("show-alerts")
+        alertErroCamp.classList.remove("show-erro-alert")
       }else if(valueEmail == "" || valuePwd == ""){
         alertEspecifecCamp.classList.toggle("show-alerts")
         alertAllCamp.classList.remove("show-alerts")
+        alertErroCamp.classList.remove("show-erro-alert")
        }else{
         try{
           const user = await signInWithEmailAndPassword(
@@ -42,7 +45,9 @@ import Head from "next/head"
           alertEspecifecCamp.classList.remove("show-alerts")
           window.location = "/Logath"
          }catch{
-         alert("Senha ou Email errados.")
+          alertErroCamp.classList.toggle("show-erro-alert")
+          alertAllCamp.classList.remove("show-alerts")
+          alertEspecifecCamp.classList.remove("show-alerts")
        }
       }
       
@@ -132,7 +137,7 @@ import Head from "next/head"
           id="alert__all_camp"
           status='error' 
           variant='left-accent'
-          w="96%"
+          w="100%"
           mx="auto"
           mt="1rem"
           borderRadius="5px"
@@ -145,7 +150,7 @@ import Head from "next/head"
                 id="alert__especifec_camp"
                 status='error' 
                 variant='left-accent'
-                w="96%"
+                w="100%"
                 mx="auto"
                 mt="1rem"
                 borderRadius="5px"
@@ -157,17 +162,18 @@ import Head from "next/head"
 
     <Alert 
                 display="none"
-                id="alert__sucess_camp"
+                id="alert__error_camp"
                 status='error' 
                 variant='left-accent'
-                w="96%"
+                w="100%"
                 mx="auto"
                 mt="1rem"
                 borderRadius="5px"
                 >
             <AlertIcon />
-            Preencha sucesso no seu Login !
+            Email ou Senha incorretos!
     </Alert>
+
 
 
     <Button 

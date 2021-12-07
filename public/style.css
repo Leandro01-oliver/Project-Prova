@@ -53,6 +53,16 @@ hr{
   border: none;
   outline: none;
 }
+#alert__pwd_camp.show-pwd-alert{
+  display: flex;
+  opacity: 1;
+  animation: animateAlert .5s ease-in-out;
+}
+#alert__error_camp.show-erro-alert{
+  display: flex;
+  opacity: 1;
+  animation: animateAlert .5s ease-in-out;
+}
 
 #alert__sucess_camp.show-alert-sucess{
   display: flex;

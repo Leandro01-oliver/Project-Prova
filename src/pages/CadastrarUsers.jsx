@@ -17,18 +17,25 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
     const registerUsers = async ()=>{
       let alertEspecifecCamp = document.querySelector("#alert__especifec_camp"),
-      alertAllCamp = document.querySelector("#alert__all_camp");
+          alertAllCamp = document.querySelector("#alert__all_camp"),
+          alertPwdCamp = document.querySelector("#alert__pwd_camp");
 
       let valueEmail =  document.querySelector("#input__email").value,
-      valuePwd =  document.querySelector("#input__pwd").value;
+         valuePwd =  document.querySelector("#input__pwd").value;
 
       setTimeout( async ()=>{
         if(valueEmail == "" && valuePwd == ""){
           alertAllCamp.classList.toggle("show-alerts")
           alertEspecifecCamp.classList.remove("show-alerts")
+          alertPwdCamp.classList.remove("show-pwd-alert")
         }else if(valueEmail == "" || valuePwd == ""){
           alertEspecifecCamp.classList.toggle("show-alerts")
           alertAllCamp.classList.remove("show-alerts")
+          alertPwdCamp.classList.remove("show-pwd-alert")
+        }else if(valuePwd.length <= 6){
+          alertPwdCamp.classList.toggle("show-pwd-alert")
+          alertAllCamp.classList.remove("show-alerts")
+          alertEspecifecCamp.classList.remove("show-alerts")
          }else{
           try{
             const user =  await createUserWithEmailAndPassword(
@@ -128,7 +135,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
           id="alert__all_camp"
           status='error' 
           variant='left-accent'
-          w="96%"
+          w="100%"
           mx="auto"
           mt="1rem"
           borderRadius="5px"
@@ -141,13 +148,13 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
                 id="alert__especifec_camp"
                 status='error' 
                 variant='left-accent'
-                w="96%"
+                w="100%"
                 mx="auto"
                 mt="1rem"
                 borderRadius="5px"
                 >
             <AlertIcon />
-            Preencha os campos que estão faltando !
+            Preencha os campos que estão faltando!
     </Alert>
 
 
@@ -156,15 +163,28 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
                 id="alert__sucess_camp"
                 status='error' 
                 variant='left-accent'
-                w="96%"
+                w="100%"
                 mx="auto"
                 mt="1rem"
                 borderRadius="5px"
                 >
             <AlertIcon />
-            Preencha sucesso no seu cadastro de login !
+            Preencha sucesso no seu cadastro de login!
     </Alert>
 
+    <Alert 
+                display="none"
+                id="alert__pwd_camp"
+                status='error' 
+                variant='left-accent'
+                w="100%"
+                mx="auto"
+                mt="1rem"
+                borderRadius="5px"
+                >
+            <AlertIcon />
+            Preencha o campo de senha com pelo menos 7 caracteres!
+    </Alert>
 
     <Button 
             w="100%"  
@@ -172,7 +192,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
             onClick={registerUsers} 
      >
         Cadastrar-se
-      </Button>
+     </Button>
 
     <a href="/">
     <Button w="100%"  
