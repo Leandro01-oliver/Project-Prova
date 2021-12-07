@@ -17,6 +17,22 @@ html,body{
   border-radius: 80px;
 }
 
+#bg-logath{
+  background-image: url("../public/cad_anuncio.jpeg");
+}
+
+#bg-cad-anuncios{
+  background-image: url("../public/carros_variados.jpg");
+}
+#bg-login{
+  background-image: url("../public/login.jpg");
+}
+
+#bg-cad-users{
+  background-image: url("../public/login.jpg");
+}
+
+
 #text-btn.active-reload{
   display: none;
 }

@@ -54,7 +54,10 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
    <Flex
     w="100%"
     minH="100vh"
-    bg="rgb(0 , 0 , 180)"
+    id="bg-cad-users"
+    backgroundSize= "100% 100%"
+    backgroundPosition= "center"
+    backgroundRepeat= "no-repeat"
     p="50px 4%"
     >
      <Flex 

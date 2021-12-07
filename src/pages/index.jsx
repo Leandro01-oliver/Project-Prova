@@ -56,9 +56,12 @@ import Head from "next/head"
 
 
    <Flex
+    id="bg-login"
     w="100%"
     minH="100vh"
-    bg="rgb(0 , 0 , 180)"
+    backgroundSize= "100% 100%"
+    backgroundPosition= "center"
+    backgroundRepeat= "no-repeat"
     p="50px 4%"
     >
      <Flex 

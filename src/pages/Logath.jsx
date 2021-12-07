@@ -230,8 +230,11 @@ import { collection, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firesto
          </Flex>  
 
          <Box
+         id="bg-logath"
+         backgroundSize= "100% 100%"
+         backgroundPosition= "center"
+         backgroundRepeat= "no-repeat"
          w="100%"
-         bg="blue"
          h="calc(100vh - 70px)"
          overflowY="scroll"
          >

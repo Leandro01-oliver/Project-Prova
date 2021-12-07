@@ -94,7 +94,11 @@ export default function CadastrarA() {
     return (
         <>
     <Flex
+    id="bg-cad-anuncios"
     w="100%"
+    backgroundSize= "100% 100%"
+    backgroundPosition= "center"
+    backgroundRepeat= "no-repeat"
     minH="100vh"
     bg="rgb(0 , 0 , 180)"
     p="50px 4%"
