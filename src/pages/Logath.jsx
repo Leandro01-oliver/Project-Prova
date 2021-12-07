@@ -235,6 +235,8 @@ import { collection, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firesto
          h="calc(100vh - 70px)"
          overflowY="scroll"
          >
+
+        
          <SimpleGrid 
               columns={{sm:"1",md:"2",lg:"3",xl:"4"}} 
               spacing={3}
@@ -372,8 +374,10 @@ import { collection, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firesto
                             </Text>
                         </Box>
                         <Box>
-                            <Text>
-                               {cars.descriptionCar}
+                            <Text
+                             textAlign="justify"
+                            >
+                                &nbsp;{cars.descriptionCar}
                             </Text>
                         </Box>
 
@@ -711,6 +715,7 @@ import { collection, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firesto
              <Text
                ml="1rem"
                mb=".25rem"
+               textAlign="justify"
              >
                         Descrição do Automóvel :
                     </Text>

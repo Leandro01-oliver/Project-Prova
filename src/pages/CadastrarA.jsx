@@ -416,6 +416,7 @@ export default function CadastrarA() {
              <Text
                ml="1rem"
                mb=".25rem"
+               textAlign="justify"
              >
                         Descrição do Automóvel :
                     </Text>
@@ -431,6 +432,7 @@ export default function CadastrarA() {
                     >
                     <textarea 
                     id="textarea__desc"
+                    maxLength="350"
                     onChange={(event) =>{
                       setDescricaoAutomovelAutomovel(event.target.value);
                     }} 
