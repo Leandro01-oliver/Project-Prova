@@ -50,12 +50,6 @@ export default function CadastrarA() {
     /*CAP ELEMENTS ALERTS*/
     let alertSucessCamp = document.querySelector("#alert__sucess_camp"),
       alertEspecifecCamp = document.querySelector("#alert__especifec_camp"),
-      alertYearMaxLengthCamp = document.querySelector(
-        "#alert__year_max_length_camp"
-      ),
-      alertYearMinLengthCamp = document.querySelector(
-        "#alert__year_min_length_camp"
-      ),
       alertAllCamp = document.querySelector("#alert__all_camp"),
       /*CAP ELEMENTS INPUTS*/
       valueCategoria = document.querySelector("#input__cartegory"),
@@ -66,74 +60,47 @@ export default function CadastrarA() {
       valueSales = document.querySelector("#input__value_sales"),
       valueDesc = document.querySelector("#textarea__desc");
 
-    setTimeout(async () => {
-      if (
-        valueCategoria.value == "" &&
-        valueMarca.value == "" &&
-        valueModelo.value == "" &&
-        valueAnoFabricacao.value == "" &&
-        valueAnoModelo.value == "" &&
-        valueSales.value == "" &&
-        valueDesc.value == ""
-      ) {
-        alertAllCamp.classList.toggle("show-alerts");
-        alertEspecifecCamp.classList.remove("show-alerts");
-        alertSucessCamp.classList.remove("show-alert-sucess");
-        alertYearMaxLengthCamp.classList.remove("show-alerts");
-        alertYearMinLengthCamp.classList.remove("show-alerts");
-      } else if (
-        valueCategoria.value == "" ||
-        valueMarca.value == "" ||
-        valueModelo.value == "" ||
-        valueAnoFabricacao.value == "" ||
-        valueAnoModelo.value == "" ||
-        valueSales.value == "" ||
-        valueDesc.value == ""
-      ) {
-        alertEspecifecCamp.classList.toggle("show-alerts");
-        alertAllCamp.classList.remove("show-alerts");
-        alertYearMaxLengthCamp.classList.remove("show-alerts");
-        alertYearMinLengthCamp.classList.remove("show-alerts");
-      } else if (
-        valueAnoFabricacao.value.length >= 5 ||
-        valueAnoModelo.value.length >= 5
-      ) {
-        alertYearMaxLengthCamp.classList.toggle("show-alerts");
-        alertYearMinLengthCamp.classList.remove("show-alerts");
-        alertEspecifecCamp.classList.remove("show-alerts");
-        alertSucessCamp.classList.remove("show-alert-sucess");
-        alertAllCamp.classList.remove("show-alerts");
-      } else if (
-        valueAnoFabricacao.value.length < 4 ||
-        valueAnoModelo.value.length < 4
-      ) {
-        alertYearMinLengthCamp.classList.toggle("show-alerts");
-        alertYearMaxLengthCamp.classList.remove("show-alerts");
-        alertEspecifecCamp.classList.remove("show-alerts");
-        alertSucessCamp.classList.remove("show-alert-sucess");
-        alertAllCamp.classList.remove("show-alerts");
+    if (
+      valueCategoria.value == "" &&
+      valueMarca.value == "" &&
+      valueModelo.value == "" &&
+      valueAnoFabricacao.value == "" &&
+      valueAnoModelo.value == "" &&
+      valueSales.value == "" &&
+      valueDesc.value == ""
+    ) {
+      alertAllCamp.classList.toggle("show-alerts");
+      alertEspecifecCamp.classList.remove("show-alerts");
+    } else if (
+      valueCategoria.value == "" ||
+      valueMarca.value == "" ||
+      valueModelo.value == "" ||
+      valueAnoFabricacao.value == "" ||
+      valueAnoModelo.value == "" ||
+      valueSales.value == "" ||
+      valueDesc.value == ""
+    ) {
+      alertEspecifecCamp.classList.toggle("show-alerts");
+      alertAllCamp.classList.remove("show-alerts");
+    } else {
+      if (addDoc) {
+        await addDoc(carCollectionRef, {
+          categoryCar: newCategoria,
+          barndCar: newMarcaAutomovel,
+          modelCar: newModeloAutomovel,
+          yearManufacturingCar: newAnoFabricacaoAutomovel,
+          yearModelCar: newAnoModeloAutomovel,
+          valueSaleCar: newValorVendaAutomovel,
+          descriptionCar: newDescricaoAutomovel,
+        });
+        alertSucessCamp.classList.toggle("show-alert-sucess");
+        alertEspecifecCamp.style.display = "none";
+        alertAllCamp.style.display = "none";
+        window.location = "/Logath";
       } else {
-        if (addDoc) {
-          await addDoc(carCollectionRef, {
-            categoryCar: newCategoria,
-            barndCar: newMarcaAutomovel,
-            modelCar: newModeloAutomovel,
-            yearManufacturingCar: newAnoFabricacaoAutomovel,
-            yearModelCar: newAnoModeloAutomovel,
-            valueSaleCar: newValorVendaAutomovel,
-            descriptionCar: newDescricaoAutomovel,
-          });
-          alertSucessCamp.classList.toggle("show-alert-sucess");
-          alertAllCamp.classList.remove("show-alerts");
-          alertEspecifecCamp.classList.remove("show-alerts");
-          alertYearMinLengthCamp.classList.remove("show-alerts");
-          alertYearMaxLengthCamp.classList.remove("show-alerts");
-          window.location = "/Logath";
-        } else {
-          alert("Não foi possível efetuar seu anúncio.");
-        }
+        alert("Não foi possível efetuar seu anúncio.");
       }
-    }, 1500);
+    }
   };
 
   return (
@@ -444,7 +411,7 @@ export default function CadastrarA() {
               variant="left-accent"
               w="96%"
               mx="auto"
-              my="1rem"
+              mt="1.5rem"
               borderRadius="5px"
             >
               <AlertIcon />
@@ -458,41 +425,11 @@ export default function CadastrarA() {
               variant="left-accent"
               w="96%"
               mx="auto"
-              my="1rem"
+              mt="1.5rem"
               borderRadius="5px"
             >
               <AlertIcon />
               Anúncio Editado com Sucesso!
-            </Alert>
-
-            <Alert
-              display="none"
-              id="alert__year_max_length_camp"
-              status="error"
-              variant="left-accent"
-              w="96%"
-              mx="auto"
-              my="1rem"
-              borderRadius="5px"
-            >
-              <AlertIcon />
-              Preeencha os campo de Ano de Fabricação e Ano de Modelo com apenas
-              4 caracteres!
-            </Alert>
-
-            <Alert
-              display="none"
-              id="alert__year_min_length_camp"
-              status="error"
-              variant="left-accent"
-              w="96%"
-              mx="auto"
-              my="1rem"
-              borderRadius="5px"
-            >
-              <AlertIcon />
-              Preeencha os campo de Ano de Fabricação e Ano de Modelo com no
-              miníno 4 caracteres!
             </Alert>
 
             <Alert
@@ -502,7 +439,7 @@ export default function CadastrarA() {
               variant="left-accent"
               w="96%"
               mx="auto"
-              my="1rem"
+              mt="1.5rem"
               borderRadius="5px"
             >
               <AlertIcon />
