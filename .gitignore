@@ -9,7 +9,7 @@
 /coverage
 
 # firebase
-/src/config
+/src/config/firebaseConnection.js
 
 # next.js
 /.next/
