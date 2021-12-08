@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import LogoImg from "../../public/logo.png";
 import Link from "next/link";
-import { db } from "../../config/firebaseConnection";
+import { db } from "../config/firebaseConnection";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 

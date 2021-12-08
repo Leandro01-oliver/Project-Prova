@@ -6,7 +6,7 @@
 .pnp.js
 
 # Configuração do Firebase com as váriaveis de ambiente
-/config
+/src/config
 
 # testing
 /coverage
