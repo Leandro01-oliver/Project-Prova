@@ -15,7 +15,7 @@ import { ImBin } from "react-icons/im";
 import Image from "next/image";
 import LogoImg from "../../public/logo.png";
 import Link from "next/link";
-import { auth, db, storage } from "../config/firebaseConnection";
+import { auth, db, storage } from "../../config/firebaseConnection";
 import { signOut } from "firebase/auth";
 import {
   collection,
