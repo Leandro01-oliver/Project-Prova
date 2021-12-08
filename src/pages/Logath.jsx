@@ -34,8 +34,7 @@ function Logath() {
   const [categoria, setUpdateCategoria] = useState("");
   const [marcaAutomovel, setUpdateMarcaAutomovel] = useState("");
   const [modeloAutomovel, setUpdateModeloAutomovel] = useState("");
-  const [anoFabricacaoAutomovel, setUpdateAnoFabricacaoAutomovel] =
-    useState("");
+  const [anoFabricacaoAutomovel, setUpdateAnoFabricacaoAutomovel] = useState("");
   const [anoModeloAutomovel, setUpdateAnoModeloAutomovel] = useState("");
   const [valorVendaAutomovel, setUpdateValorVendaAutomovel] = useState("");
   const [descricaoAutomovel, setUpdateDescricaoAutomovelAutomovel] =
@@ -55,6 +54,8 @@ function Logath() {
     /*CAP ELEMENTS ALERTS*/
     let alertSucessCamp = document.querySelector("#alert__sucess_camp"),
       alertEspecifecCamp = document.querySelector("#alert__especifec_camp"),
+      alertYearMaxLengthCamp = document.querySelector("#alert__year_max_length_camp"),
+      alertYearMinLengthCamp = document.querySelector("#alert__year_min_length_camp"),
       alertAllCamp = document.querySelector("#alert__all_camp"),
       /*CAP ELEMENTS INPUTS*/
       valueCategoria = document.querySelector("#input__cartegory"),
@@ -77,6 +78,9 @@ function Logath() {
       ) {
         alertAllCamp.classList.toggle("show-alerts");
         alertEspecifecCamp.classList.remove("show-alerts");
+        alertSucessCamp.classList.remove("show-alert-sucess");
+        alertYearMaxLengthCamp.classList.remove("show-alerts");
+        alertYearMinLengthCamp.classList.remove("show-alerts");
       } else if (
         valueCategoria.value == "" ||
         valueMarca.value == "" ||
@@ -87,6 +91,21 @@ function Logath() {
         valueDesc.value == ""
       ) {
         alertEspecifecCamp.classList.toggle("show-alerts");
+        alertAllCamp.classList.remove("show-alerts");
+        alertYearMaxLengthCamp.classList.remove("show-alerts");
+        alertYearMinLengthCamp.classList.remove("show-alerts");
+
+      } else if ( valueAnoFabricacao.value.length >= 5 || valueAnoModelo.value.length >= 5 ){
+        alertYearMaxLengthCamp.classList.toggle("show-alerts");
+        alertYearMinLengthCamp.classList.remove("show-alerts");
+        alertEspecifecCamp.classList.remove("show-alerts");
+        alertSucessCamp.classList.remove("show-alert-sucess");
+        alertAllCamp.classList.remove("show-alerts");
+      } else if ( valueAnoFabricacao.value.length < 4 || valueAnoModelo.value.length < 4 ){
+        alertYearMinLengthCamp.classList.toggle("show-alerts");
+        alertYearMaxLengthCamp.classList.remove("show-alerts");
+        alertEspecifecCamp.classList.remove("show-alerts");
+        alertSucessCamp.classList.remove("show-alert-sucess");
         alertAllCamp.classList.remove("show-alerts");
       } else {
         if (updateDoc) {
@@ -99,9 +118,11 @@ function Logath() {
             valueSaleCar: valorVendaAutomovel,
             descriptionCar: descricaoAutomovel,
           });
+          alertSucessCamp.classList.toggle("show-alert-sucess");
           alertAllCamp.classList.remove("show-alerts");
           alertEspecifecCamp.classList.remove("show-alerts");
-          alertSucessCamp.classList.toggle("show-alert-sucess");
+          alertYearMaxLengthCamp.classList.remove("show-alerts");
+          alertYearMinLengthCamp.classList.remove("show-alerts");
         } else {
           alert("Não foi possível atualizar seu anúncio.");
         }
@@ -517,23 +538,10 @@ function Logath() {
                         >
                           <Input
                             w="100%"
-                            maxLength="10"
                             id="input__year_manufacturing"
-                            onKeyPress={() => {
-                              let inputYearManufacturing =
-                                document.querySelector(
-                                  "#input__year_manufacturing"
-                                );
-
-                              if (
-                                inputYearManufacturing.value.length == 2 ||
-                                inputYearManufacturing.value.length == 5
-                              )
-                                inputYearManufacturing.value += "/";
-                            }}
                             p="0 10px"
                             h="50px"
-                            type="text"
+                            type="number"
                             border="0"
                             borderRadius="5px!important"
                             _focus={{
@@ -568,20 +576,9 @@ function Logath() {
                           <Input
                             w="100%"
                             id="input__year_model"
-                            maxLength="10"
-                            onKeyPress={() => {
-                              let inputYearModel =
-                                document.querySelector("#input__year_model");
-
-                              if (
-                                inputYearModel.value.length == 2 ||
-                                inputYearModel.value.length == 5
-                              )
-                                inputYearModel.value += "/";
-                            }}
                             p="0 10px"
                             h="50px"
-                            type="text"
+                            type="number"
                             border="0"
                             borderRadius="5px!important"
                             _focus={{
@@ -661,6 +658,7 @@ function Logath() {
                           ></textarea>
                         </Flex>
                       </Box>
+                      
                       <Alert
                         display="none"
                         id="alert__all_camp"
@@ -691,6 +689,34 @@ function Logath() {
 
                       <Alert
                         display="none"
+                        id="alert__year_max_length_camp"
+                        status="error"
+                        variant="left-accent"
+                        w="96%"
+                        mx="auto"
+                        my="1rem"
+                        borderRadius="5px"
+                      >
+                        <AlertIcon />
+                        Preeencha os campo de Ano de Fabricação e Ano de Modelo com apenas 4 caracteres!
+                      </Alert>
+
+                      <Alert
+                        display="none"
+                        id="alert__year_min_length_camp"
+                        status="error"
+                        variant="left-accent"
+                        w="96%"
+                        mx="auto"
+                        my="1rem"
+                        borderRadius="5px"
+                      >
+                        <AlertIcon />
+                        Preeencha os campo de Ano de Fabricação e Ano de Modelo com no miníno 4 caracteres!
+                      </Alert>
+
+                      <Alert
+                        display="none"
                         id="alert__especifec_camp"
                         status="error"
                         variant="left-accent"
@@ -702,6 +728,7 @@ function Logath() {
                         <AlertIcon />
                         Preencha os campos que estão faltando !
                       </Alert>
+
                       <Box w="96%" mx="auto">
                         <Button w="100%" onClick={() => confEdit(cars.id)}>
                           Confirmar

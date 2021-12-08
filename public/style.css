@@ -53,6 +53,7 @@ hr{
   border: none;
   outline: none;
 }
+
 #alert__pwd_camp.show-pwd-alert{
   display: flex;
   opacity: 1;
@@ -69,6 +70,19 @@ hr{
   opacity: 1;
   animation: animateAlert .5s ease-in-out;
 }
+
+#alert__year_max_length_camp.show-alerts{
+  display: flex;
+  opacity: 1;
+  animation: animateAlert .5s ease-in-out;
+}
+
+#alert__year_min_length_camp.show-alerts{
+  display: flex;
+  opacity: 1;
+  animation: animateAlert .5s ease-in-out;
+}
+
 
 #alert__especifec_camp.show-alerts{
   display: flex;
