@@ -15,7 +15,7 @@ import { useState } from "react";
 import Image from "next/image";
 import LogoImg from "../../public/logo.png";
 import { auth } from "../config/firebaseConnection";
-import { signInWithEmailAndPassword, GoogleAuthProvider,signInWithPopup, FacebookAuthProvider } from "firebase/auth";
+import { signInWithEmailAndPassword, GoogleAuthProvider,signInWithPopup, FacebookAuthProvider,GithubAuthProvider } from "firebase/auth";
 
 function Home() {
   const [show, setShow] = React.useState(false);
@@ -23,6 +23,17 @@ function Home() {
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPwd, setLoginPwd] = useState("");
+
+  const signPoupGithub = ()=>{
+    const provider = new GithubAuthProvider();
+
+    signInWithPopup(auth,provider)
+    .then(()=>{
+      alert("Sucesso com a autenticação do faceboock")
+    }).catch(()=>{
+      // alert("Erro com a autenticação do faceboock")
+    })
+  }
 
   const signPoupFaceboock = ()=>{
     const provider = new FacebookAuthProvider();
@@ -228,6 +239,10 @@ function Home() {
 
         <Button w="100%" mt="1rem" onClick={signPoupFaceboock}>
             Meta
+        </Button>
+
+        <Button w="100%" mt="1rem" onClick={signPoupGithub}>
+            Github
         </Button>
         </Flex>
       </Flex>
