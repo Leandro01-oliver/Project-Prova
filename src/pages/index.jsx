@@ -24,11 +24,11 @@ function Home() {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPwd, setLoginPwd] = useState("");
 
-  const signPoupGoogle = async()=>{
+  const signPoupGoogle = ()=>{
     
   const provider = new GoogleAuthProvider();
 
-    await signInWithPopup(auth,provider)
+     signInWithPopup(auth,provider)
      .then((result)=>{
        const name = result.user.displayName
        const email = result.user.email
