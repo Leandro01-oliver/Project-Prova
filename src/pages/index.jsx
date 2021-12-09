@@ -31,7 +31,7 @@ function Home() {
     .then(()=>{
       alert("Sucesso com a autenticação do faceboock")
     }).catch(()=>{
-      alert("Erro com a autenticação do faceboock")
+      // alert("Erro com a autenticação do faceboock")
     })
   }
 
