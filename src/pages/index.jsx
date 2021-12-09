@@ -25,12 +25,17 @@ function Home() {
   const [loginPwd, setLoginPwd] = useState("");
 
   const signPoupGithub = ()=>{
-    
+
     const provider = new GithubAuthProvider();
 
     signInWithPopup(auth,provider)
     .then(()=>{
       alert("Sucesso com a autenticação do faceboock")
+      
+      setTimeout(()=>{
+        window.location="/Logath"
+      },1500)
+      
     }).catch(()=>{
       // alert("Erro com a autenticação do faceboock")
     })
@@ -42,6 +47,11 @@ function Home() {
     signInWithPopup(auth,provider)
     .then(()=>{
       alert("Sucesso com a autenticação do faceboock")
+
+      setTimeout(()=>{
+        window.location="/Logath"
+      },1500)
+
     }).catch(()=>{
       // alert("Erro com a autenticação do faceboock")
     })
