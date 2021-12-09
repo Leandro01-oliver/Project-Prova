@@ -30,12 +30,11 @@ function Home() {
 
     signInWithPopup(auth,provider)
     .then(()=>{
-      alert("Sucesso com a autenticação do faceboock")
       
       setTimeout(()=>{
         window.location="/Logath"
       },1500)
-      
+
     }).catch(()=>{
       // alert("Erro com a autenticação do faceboock")
     })
