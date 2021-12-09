@@ -15,7 +15,7 @@ import { useState } from "react";
 import Image from "next/image";
 import LogoImg from "../../public/logo.png";
 import { auth } from "../config/firebaseConnection";
-import { signInWithEmailAndPassword, GoogleAuthProvider,signInWithPopup } from "firebase/auth";
+import { signInWithEmailAndPassword, GoogleAuthProvider,signInWithPopup, FacebookAuthProvider } from "firebase/auth";
 
 function Home() {
   const [show, setShow] = React.useState(false);
@@ -23,6 +23,17 @@ function Home() {
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPwd, setLoginPwd] = useState("");
+
+  const signPoupFaceboock = ()=>{
+    const provider = new FacebookAuthProvider();
+
+    signInWithPopup(auth,provider)
+    .then(()=>{
+      alert("Sucesso com a autenticação do faceboock")
+    }).catch(()=>{
+      alert("Erro com a autenticação do faceboock")
+    })
+  }
 
   const signPoupGoogle = ()=>{
     
@@ -38,9 +49,9 @@ function Home() {
        localStorage.setItem("email",email)
        localStorage.setItem("profile",profile)
 
-      //  setTimeout(()=>{
-      //    window.location="/Logath"
-      //  },1500)
+       setTimeout(()=>{
+         window.location="/Logath"
+       },1500)
 
      }).catch((error)=>{
         console.log("erro na autenticação com o google")
@@ -213,6 +224,10 @@ function Home() {
 
         <Button w="100%" mt="1rem" onClick={signPoupGoogle}>
             Google
+        </Button>
+
+        <Button w="100%" mt="1rem" onClick={signPoupFaceboock}>
+            Meta
         </Button>
         </Flex>
       </Flex>
