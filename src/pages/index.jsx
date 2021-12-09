@@ -25,6 +25,7 @@ function Home() {
   const [loginPwd, setLoginPwd] = useState("");
 
   const signPoupGithub = ()=>{
+    
     const provider = new GithubAuthProvider();
 
     signInWithPopup(auth,provider)
