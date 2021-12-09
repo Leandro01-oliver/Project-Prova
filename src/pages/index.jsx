@@ -9,15 +9,13 @@ import {
   Alert,
   AlertIcon,
 } from "@chakra-ui/react";
-import React from "react";
+import React,{useEffect} from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import Image from "next/image";
 import LogoImg from "../../public/logo.png";
 import { auth } from "../config/firebaseConnection";
-import { signInWithEmailAndPassword } from "firebase/auth";
-
-import Head from "next/head";
+import { signInWithEmailAndPassword, GoogleAuthProvider,signInWithPopup } from "firebase/auth";
 
 function Home() {
   const [show, setShow] = React.useState(false);
@@ -25,6 +23,29 @@ function Home() {
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPwd, setLoginPwd] = useState("");
+
+  const signPoupGoogle = async()=>{
+    
+  const provider = new GoogleAuthProvider();
+
+    await signInWithPopup(auth,provider)
+     .then((result)=>{
+       const name = result.user.displayName
+       const email = result.user.email
+       const profile = result.user.photoURL
+
+       localStorage.setItem("name",name)
+       localStorage.setItem("email",email)
+       localStorage.setItem("profile",profile)
+
+       setTimeout(()=>{
+         window.location="/Logath"
+       },1500)
+
+     }).catch((error)=>{
+        console.log("erro na autenticação com o google")
+     })
+  }
 
   const redirectionLogath = async () => {
     let alertEspecifecCamp = document.querySelector("#alert__especifec_camp"),
@@ -61,6 +82,8 @@ function Home() {
       }
     }, 2000);
   };
+
+
 
   return (
     <>
@@ -175,11 +198,22 @@ function Home() {
           <Button w="100%" mt="1rem" onClick={redirectionLogath}>
             Entrar
           </Button>
+
           <a href="/CadastrarUsers">
             <Button w="100%" my="1rem">
               Cadastrar-se
             </Button>
           </a>
+
+        <Box
+        my="1rem"
+        >
+          <hr />
+        </Box>
+
+        <Button w="100%" mt="1rem" onClick={signPoupGoogle}>
+            Google
+        </Button>
         </Flex>
       </Flex>
     </>
