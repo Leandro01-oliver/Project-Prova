@@ -30,7 +30,7 @@ function Home() {
 
     signInWithPopup(auth,provider)
     .then(()=>{
-      
+
       setTimeout(()=>{
         window.location="/Logath"
       },1500)
@@ -45,8 +45,7 @@ function Home() {
 
     signInWithPopup(auth,provider)
     .then(()=>{
-      alert("Sucesso com a autenticação do faceboock")
-
+      
       setTimeout(()=>{
         window.location="/Logath"
       },1500)
