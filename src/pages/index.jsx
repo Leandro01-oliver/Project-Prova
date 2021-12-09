@@ -38,9 +38,9 @@ function Home() {
        localStorage.setItem("email",email)
        localStorage.setItem("profile",profile)
 
-       setTimeout(()=>{
-         window.location="/Logath"
-       },1500)
+      //  setTimeout(()=>{
+      //    window.location="/Logath"
+      //  },1500)
 
      }).catch((error)=>{
         console.log("erro na autenticação com o google")
