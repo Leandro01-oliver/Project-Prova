@@ -14,7 +14,7 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import Image from "next/image";
 import LogoImg from "../../public/logo.png";
-import { auth } from "../config/firebaseConnection";
+import { auth } from "../../config/firebaseConnection";
 import { signInWithEmailAndPassword, GoogleAuthProvider,signInWithPopup, FacebookAuthProvider,GithubAuthProvider } from "firebase/auth";
 
 function Home() {

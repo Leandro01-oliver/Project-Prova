@@ -8,7 +8,7 @@ import {
   AlertIcon,
 } from "@chakra-ui/react";
 import React from "react";
-import { auth } from "../config/firebaseConnection";
+import { auth } from "../../config/firebaseConnection";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import Image from "next/image";
