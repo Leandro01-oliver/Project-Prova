@@ -40,6 +40,7 @@ function Logath() {
   const [descricaoAutomovel, setUpdateDescricaoAutomovelAutomovel] =
     useState("");
 
+    
   const openModalMenu = () => {
     let modalEdit = document.querySelector("#modal-edit");
 
