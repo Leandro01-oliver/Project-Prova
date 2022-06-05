@@ -5,7 +5,9 @@
 /.pnp
 .pnp.js
 
-config/
+#Config
+/config
+
 # # Configuração do Firebase com as váriaveis de ambiente
 # /src/config
 
